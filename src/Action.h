@@ -35,7 +35,7 @@ public:
     std::string toString() const;
 private:
 	const int tableId;
-	const std::vector<Customer *> customers;
+	std::vector<Customer *> customers;
 };
 
 
