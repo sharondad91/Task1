@@ -2,7 +2,7 @@
 // Created by sharon on 11/12/18.
 //
 
-//SHARON IS DAD
+//SHARON IS DAD :)
 #include "Dish.h"
 
 Dish::Dish(int d_id, std::string d_name, int d_price, DishType d_type):
