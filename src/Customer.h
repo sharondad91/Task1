@@ -14,7 +14,7 @@ public:
     int getId() const;
 private:
     const std::string name;
-    const int id
+    const int id;
 };
 
 
@@ -33,6 +33,7 @@ public:
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
+	bool first;
 };
 
 
@@ -42,6 +43,7 @@ public:
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
+	bool first;
 };
 
 
@@ -51,7 +53,14 @@ public:
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
 private:
+	int lastID;
 };
 
+int FindCheapDish(const std::vector<Dish> &menu);
+int FindExpansiveSpicy(const std::vector<Dish> &menu);
+int FindCheapestBvg(const std::vector<Dish> &menu);
+std::vector<int> vegOrder(const std::vector<Dish> &menu);
+int FindCheapestAlc(const std::vector<Dish> &menu, int id);
+int FindExpansiveAlc(const std::vector<Dish> &menu);
 
 #endif
