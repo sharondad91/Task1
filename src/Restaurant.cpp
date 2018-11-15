@@ -66,7 +66,7 @@ Restaurant::Restaurant(const std::string &configFilePath):
                     else
                         dishType = ALC;
 
-                    menu.push_back(Dish(idDish,dishName,stoi(dishPrice),dishType));                                 //?
+                    menu.push_back(Dish(idDish,dishName,stoi(dishPrice),dishType));
                     idDish++;
                 }
             }
@@ -74,7 +74,12 @@ Restaurant::Restaurant(const std::string &configFilePath):
 
     }
 
-void Restaurant::start() { open=true;}
+void Restaurant::start() {
+    open=true;
+    //........................................................................
+    //open table(with type-customers vector)
+    //order - make sure order printed
+}
 
 int Restaurant::getNumOfTables() const {return tables.size();}
 

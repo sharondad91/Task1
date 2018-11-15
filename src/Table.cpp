@@ -11,6 +11,7 @@ Table::Table(int t_capacity) :
 
 int Table::getCapacity() const{ return capacity;}
 
+//push to customerList
 void Table::addCustomer(Customer* customer);
 
 void Table::removeCustomer(int id);
@@ -21,6 +22,7 @@ std::vector<Customer*>& Table::getCustomers();
 
 std::vector<OrderPair>& Table::getOrders();
 
+//for all customers
 void Table::order(const std::vector<Dish> &menu);
 
 void Table::openTable(){open = true;}
