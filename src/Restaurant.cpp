@@ -75,10 +75,96 @@ Restaurant::Restaurant(const std::string &configFilePath):
     }
 
 void Restaurant::start() {
+
     open=true;
-    //........................................................................
-    //open table(with type-customers vector)
-    //order - make sure order printed
+    cout << "Restaurant is now open!";
+
+    int customer_index=0;
+
+    string line;
+    while(getline(cin,line)) {
+        int i=0;
+        while (line[i] != ' ')
+            i++;
+        string action = line.substr(0, i);                  //string of action
+
+        //open table(with type-customers vector). customer gets id by entering order
+        if (action=="open")
+        {
+            vector<Customer *> customers_input;
+            int j=i+1;
+            while (line[j] != ' ')
+                j++;
+            string table_id = line.substr(i+1, j);
+
+            j++;
+            i=j;
+
+            while (j<line.size())
+            {
+                while(line[j] != ',')
+                    j++;
+                string customer_name = line.substr(i, j);
+                if(line[j+1] == 's' || line[j+1] == 'S')
+                    customers_input.push_back(new SpicyCustomer(customer_name, customer_index));
+                if(line[j+1] == 'v' || line[j+1] == 'V')
+                    customers_input.push_back(new VegetarianCustomer(customer_name, customer_index));
+                if(line[j+1] == 'c' || line[j+1] == 'C')
+                    customers_input.push_back(new CheapCustomer(customer_name, customer_index));
+                else
+                    customers_input.push_back(new AlchoholicCustomer(customer_name, customer_index));
+                j=j+5;
+                i=j;
+            }
+            OpenTable(stoi(table_id), customers_input).act(*this);
+        }
+
+        //order - make sure order printed
+        if (action=="order")
+        {
+            int j=i+1;
+            while (line[j] != ' ')
+                j++;
+            string table_id = line.substr(i+1, j);
+            OpenTable(stoi(table_id), customers_input).act(*this);
+        }
+        if(action=="move")
+        {
+
+        }
+        if(action=="close")
+        {
+
+        }
+        //close all - quit loop   +
+        //BaseAction.complete();
+        if (action=="closeall")
+        {
+
+        }
+        if (action=="menu")
+        {
+
+        }
+        if (action=="status")
+        {
+
+        }
+        if(action=="log")
+        {
+
+        }
+        if(action=="backup")
+        {
+
+        }
+        if(action=="restore")
+        {
+
+        }
+        //BaseAction* action= new BaseAction();
+
+    }
 }
 
 int Restaurant::getNumOfTables() const {return tables.size();}

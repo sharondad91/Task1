@@ -4,6 +4,7 @@
 
 #include "Action.h"
 #include "Table.h"
+#include "Restaurant.h"
 
     BaseAction::BaseAction():
     errorMsg(""), status(PENDING)
@@ -17,6 +18,7 @@
     void BaseAction::error(std::string errorMsg){
     status=ERROR;
     this->errorMsg=errorMsg;
+    // print error message?  "Error: "+errorMsg
 }
     std::string BaseAction::getErrorMsg() const{
         return errorMsg;
@@ -28,17 +30,17 @@
     {}
 
     void OpenTable::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()>tableId)&&(restaurant.getTable(tableId).open == true)) {
+        if((restaurant.getNumOfTables()>tableId)&&(restaurant.getTable(tableId)->open == true)) {
             std::string str = "Table does not exist or is already open";
             error(str);
         }
         else{
             int i=0;
             while (i < customers.size()) {
-                restaurant.getTable(tableId).addCusomer(customersList[i]);
+                restaurant.getTable(tableId)->addCustomer(customers[i]);
                 i++;
             }
-            restaurant.getTable(tableId).openTable();
+            restaurant.getTable(tableId)->openTable();
             complete();
         }
     }
@@ -51,12 +53,12 @@
     {}
 
     void Order::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()>tableId)&&(restaurant.getTable(tableId).open == false)) {
+        if((restaurant.getNumOfTables()>tableId)&&(restaurant.getTable(tableId)->isOpen() == false)) {
             std::string str = "Table does not exist or is not open";
             error(str);
         }
         else {
-            restaurant.getTable(tableId).order();
+            restaurant.getTable(tableId)->order(restaurant.getMenu());
             complete();
             // to string??? - print order
         }
@@ -84,13 +86,13 @@
             error(str);
         }
         else{
-            restaurant.getTable(tableId).getBill();                     //use bill amount???
+            restaurant.getTable(tableId)->getBill();                     //use bill amount???
             int i=0;
-            while (i < restaurant.getTable(tableId).getCustomers().size()) {
-                removeCustomer(restaurant.getTable(tableId).getCustomers()[i].getId());
+            while (i < restaurant.getTable(tableId)->getCustomers().size()) {
+                restaurant.getTable(tableId)->removeCustomer(restaurant.getTable(tableId)->getCustomers()[i].getId());
                 i++;
             }
-            restaurant.getTable(tableId).closeTable();
+            restaurant.getTable(tableId)->closeTable();
             complete();
         }
     }
@@ -106,13 +108,11 @@
         int i=0;
         while (i<restaurant.getNumOfTables())
         {
-            if(restaurant.getTable(i).open == true)
+            if(restaurant.getTable(i)->isOpen() == true)
             {
                 Close(i).act(restaurant);                       //....?
             }
             //............close restaurant and exit
-
-            complete();
         }
     }
 
@@ -143,7 +143,8 @@
         }
         else                                                //opened table
         {
-            std::vector<OrderPair>& orders= restaurant.getTable(tableId).getCustomers().getOrders();
+            //std::vector<OrderPair>& orders= restaurant.getTable(tableId)->getCustomers().getOrders();
+            std::vector<OrderPair>& orders= restaurant.getTable(tableId)->getOrders();
                 //print satatus, customers, orders
         }
 
@@ -158,7 +159,7 @@
     {}
 
     void PrintActionsLog::act(Restaurant &restaurant){
-        std::vector<BaseAction*>& log= restaurant.getActionsLog();
+        std::vector<BaseAction*>& log= restaurant.getActionsLog();                      //binding
             //print log
     }
     std::string PrintActionsLog::toString() const;
