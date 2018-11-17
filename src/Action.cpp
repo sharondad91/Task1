@@ -20,7 +20,6 @@ using namespace std;
     void BaseAction::error(std::string errorMsg){
     status=ERROR;
     this->errorMsg=errorMsg;
-    // print error message?  "Error: "+errorMsg
 }
     std::string BaseAction::getErrorMsg() const{
         return errorMsg;
@@ -48,7 +47,20 @@ using namespace std;
         }
     }
 
-    std::string OpenTable::toString() const;
+    std::string OpenTable::toString() const{
+        cout<<"open "<<tableId<<" ";
+        for (int i=0;i<customers.size();i++)
+        {
+            cout<<customers[i]->getName()<<","<<customers[i]->toString()<<" ";
+        }
+        switch(getStatus()) {
+            case COMPLETED: cout << "Completed"<<endl;
+                break;
+            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
+                break;
+        }
+
+    }
 
 
     Order::Order(int id):
@@ -77,16 +89,55 @@ using namespace std;
         }
     }
 
-    std::string Order::toString() const;
+    std::string Order::toString() const{
+        cout<<"order "<<tableId<<" ";
+
+        switch(getStatus()) {
+            case COMPLETED: cout << "Completed"<<endl;
+                break;
+            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
+                break;
+        }
+    }
 
 
     MoveCustomer::MoveCustomer(int src, int dst, int customerId):
         BaseAction(), srcTable(src), dstTable(dst), id(customerId)
     {}
             //move bill with customer
-    void MoveCustomer::act(Restaurant &restaurant);
+    void MoveCustomer::act(Restaurant &restaurant){
+        if(restaurant.getTable(dstTable)->getCapacity()>restaurant.getTable(dstTable)->getCustomers().size())
+        {
+            Customer * customer2= restaurant.getTable(srcTable)->getCustomer(id)->clone();
+            
+            //take all his orders to new vector
+            //push new vector to dest table
 
-    std::string MoveCustomer::toString() const;
+            restaurant.getTable(dstTable)->addCustomer(customer2);
+            restaurant.getTable(srcTable)->removeCustomer(id);
+
+
+
+            complete();
+        }
+        else {
+            std::string str = "Cannot move customer";
+            error(str);
+        }
+
+
+    }
+
+    std::string MoveCustomer::toString() const{
+        cout<<"move "<<srcTable<<" "<<dstTable<<" "<<id<<" ";
+        switch(getStatus()) {
+            case COMPLETED: cout << "Completed"<<endl;
+                break;
+            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
+                break;
+        }
+    }
+
 
 
     Close::Close(int id):
@@ -94,7 +145,7 @@ using namespace std;
     {}
 
     void Close::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()>tableId)&&(restaurant.getTable(tableId).open == false)) {
+        if((restaurant.getNumOfTables()>tableId) || (restaurant.getTable(tableId)->isOpen() == false) ) {
             std::string str = "Table does not exist or is not open";
             error(str);
         }
@@ -106,7 +157,16 @@ using namespace std;
         }
     }
 
-    std::string Close::toString() const;
+    std::string Close::toString() const{
+        cout<<"close "<<tableId<<" ";
+
+        switch(getStatus()) {
+            case COMPLETED: cout << "Completed"<<endl;
+                break;
+            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
+                break;
+        }
+    }
 
 
     CloseAll::CloseAll():
@@ -123,6 +183,7 @@ using namespace std;
             }
             //............close restaurant and exit
         }
+        complete();
     }
 
     std::string CloseAll::toString() const;
@@ -143,7 +204,9 @@ using namespace std;
         complete();
     }
 
-    std::string PrintMenu::toString() const;
+    std::string PrintMenu::toString() const{
+        cout<<"menu Completed"<<endl;
+    }
 
 
     PrintTableStatus::PrintTableStatus(int id):
@@ -176,7 +239,10 @@ using namespace std;
         complete();
     }
 
-    std::string PrintTableStatus::toString() const;
+    std::string PrintTableStatus::toString() const{
+        cout<<"status "<<tableId<<" Completed"<<endl;
+
+    }
 
 
     PrintActionsLog::PrintActionsLog():
@@ -184,10 +250,14 @@ using namespace std;
     {}
 
     void PrintActionsLog::act(Restaurant &restaurant){
-        std::vector<BaseAction*>& log= restaurant.getActionsLog();                      //binding
-            //print log
+        for(int i=0;i<restaurant.getActionsLog().size();i++)
+        {
+            (restaurant.getActionsLog())[i]->toString();
+        }
     }
-    std::string PrintActionsLog::toString() const;
+    std::string PrintActionsLog::toString() const{
+        cout<<"log Completed"<<endl;
+    }
 
 
     BackupRestaurant::BackupRestaurant():
@@ -197,7 +267,10 @@ using namespace std;
     void BackupRestaurant::act(Restaurant &restaurant){
             //copy constructor
     }
-    std::string BackupRestaurant::toString() const;
+    std::string BackupRestaurant::toString() const{
+
+        cout<<"backup Completed"<<endl;
+    }
 
 
     RestoreResturant::RestoreResturant():
@@ -206,7 +279,18 @@ using namespace std;
 
     void RestoreResturant::act(Restaurant &restaurant){
             // = constructor
+
+
+
     }
-    std::string RestoreResturant::toString() const;
+    std::string RestoreResturant::toString() const{
+        cout<<"restore ";
+        switch(getStatus()) {
+            case COMPLETED: cout << "Completed"<<endl;
+                break;
+            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
+                break;
+        }
+    }
 
 

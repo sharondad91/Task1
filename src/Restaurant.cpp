@@ -81,9 +81,9 @@ void Restaurant::start() {
     cout << "Restaurant is now open!"<<endl;
 
     int customer_index=0;
-
+    bool finito=false;
     string line;
-    while(getline(cin,line)) {
+    while(!finito && getline(cin,line)) {
         int i=0;
         while (line[i] != ' ')
             i++;
@@ -117,7 +117,9 @@ void Restaurant::start() {
                 j=j+5;
                 i=j;
             }
-            OpenTable(stoi(table_id), customers_input).act(*this);
+            OpenTable* action1= new OpenTable(stoi(table_id), customers_input);
+            action1->act(*this);
+            actionsLog.push_back(action1);
         }
 
         //order - make sure order printed
@@ -127,25 +129,53 @@ void Restaurant::start() {
             while (j<line.size())
                 j++;
             string table_id = line.substr(i+1, j);
-            Order(stoi(table_id)).act(*this);
+
+            Order* action1= new Order(stoi(table_id));
+            action1->act(*this);
+            actionsLog.push_back(action1);
         }
         if(action=="move")
         {
+            int j=i+1;
+            i=j;
+            while (line[j] != ' ')
+                j++;
+            string srctable = line.substr(i, j);
+            j=j+1;
+            i=j;
+            while (line[j] != ' ')
+                j++;
+            string destable = line.substr(i, j);
+            string idcustomer = line.substr(j+1, line.size());
 
+            MoveCustomer* action1= new MoveCustomer(stoi(srctable),stoi(destable),stoi(idcustomer));
+            action1->act(*this);
+            actionsLog.push_back(action1);
         }
         if(action=="close")
         {
+            int j=i+1;
+            while (j<line.size())
+                j++;
+            string table_id = line.substr(i+1, j);
 
+            Close* action1= new Close(stoi(table_id));
+            action1->act(*this);
+            actionsLog.push_back(action1);
         }
-        //close all - quit loop   +
-        //BaseAction.complete();
+
         if (action=="closeall")
         {
-
+            CloseAll* action1= new CloseAll();
+            action1->act(*this);
+            actionsLog.push_back(action1);
+            finito = true;
         }
         if (action=="menu")
         {
-            PrintMenu().act(*this);
+            PrintMenu* action1= new PrintMenu();
+            action1->act(*this);
+            actionsLog.push_back(action1);
 
         }
         if (action=="status")
@@ -154,10 +184,19 @@ void Restaurant::start() {
             while (j<line.size())
                 j++;
             string table_id = line.substr(i+1, j);
-            PrintTableStatus(stoi(table_id)).act(*this);
+
+            PrintTableStatus* action1= new PrintTableStatus(stoi(table_id));
+            action1->act(*this);
+            actionsLog.push_back(action1);
         }
         if(action=="log")
         {
+
+            PrintActionsLog* action1= new PrintActionsLog());
+            action1->act(*this);
+            actionsLog.push_back(action1);
+
+
 
         }
         if(action=="backup")

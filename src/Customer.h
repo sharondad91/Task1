@@ -10,6 +10,7 @@ public:
     Customer(std::string c_name, int c_id);
     virtual std::vector<int> order(const std::vector<Dish> &menu)=0;
     virtual std::string toString() const = 0;
+    virtual Customer* clone() =0;
     std::string getName() const;
     int getId() const;
 private:
@@ -23,7 +24,9 @@ public:
 	VegetarianCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    Customer* clone();
 private:
+
 };
 
 
@@ -32,6 +35,7 @@ public:
 	CheapCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    Customer* clone();
 private:
 	bool first;
 };
@@ -42,6 +46,7 @@ public:
 	SpicyCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    Customer* clone();
 private:
 	bool first;
 };
@@ -52,6 +57,7 @@ public:
 	AlchoholicCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
+    Customer* clone();
 private:
 	int lastID;
 };

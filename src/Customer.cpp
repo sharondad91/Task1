@@ -27,7 +27,12 @@
         vec=vegOrder(menu);
         return vec;
     }
-    std::string VegetarianCustomer::toString() const;
+    std::string VegetarianCustomer::toString() const{
+        return "veg";
+    }
+    Customer* VegetarianCustomer::clone(){
+        return new VegetarianCustomer(*this);
+    }
 
 
     CheapCustomer::CheapCustomer(std::string name, int id):
@@ -44,7 +49,12 @@
             vec.push_back(-1);
         return vec;
     }
-    std::string CheapCustomer::toString() const;
+    std::string CheapCustomer::toString() const{
+        return "chp";
+}
+    Customer* CheapCustomer::clone(){
+        return new CheapCustomer(*this);
+    }
 
 
     SpicyCustomer::SpicyCustomer(std::string name, int id):
@@ -63,7 +73,12 @@
         }
         return vec;
     }
-    std::string SpicyCustomer::toString() const;
+    std::string SpicyCustomer::toString() const{
+        return "spc";
+}
+    Customer* SpicyCustomer::clone(){
+        return new SpicyCustomer(*this);
+}
 
 
     AlchoholicCustomer::AlchoholicCustomer(std::string name, int id):
@@ -84,10 +99,15 @@
         return vec;
 
     }
-    std::string AlchoholicCustomer::toString() const;
+    std::string AlchoholicCustomer::toString() const{
+        return "alc";
+}
+    Customer* AlchoholicCustomer::clone(){
+        return new AlchoholicCustomer(*this);
+}
 
 
-//TODO: check empty menu?
+
     int FindCheapDish(const std::vector<Dish> &menu){
         int i=1;
         int minimumInd=0;

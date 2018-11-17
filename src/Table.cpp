@@ -20,10 +20,17 @@ void Table::addCustomer(Customer* customer){
 }
 
 void Table::removeCustomer(int id){
+    vector<OrderPair> newOrderlist;
+
+    //     create new vector without my orders
+
     for(int i=0;i<orderList.size();i++){
         if(orderList[i].first==id)
             orderList.erase(orderList.begin()+i);
     }
+
+
+
     delete getCustomer(id);
 }
 
@@ -53,8 +60,8 @@ void Table::order(const std::vector<Dish> &menu){
             for(int j=0;j<orderlistid.size();j++)
             {
                 Dish * dish2 = new Dish(menu[orderlistid[j]]);
-                OrderPair* tmpOrder= new OrderPair(customersList[i]->getId(),*dish2)
-                orderList.push_back(tmpOrder);
+                OrderPair* tmpOrder= new OrderPair(customersList[i]->getId(),*dish2);
+                orderList.push_back(*tmpOrder);
             }
         }
 
