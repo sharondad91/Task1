@@ -6,7 +6,9 @@
 
 
     Customer::Customer(std::string c_name, int c_id):
-    name(c_name), id(c_id){}
+    name(c_name), id(c_id)
+    {}
+
     std::string Customer::getName() const
     {
         return name;
@@ -174,8 +176,10 @@ std::vector<int> vegOrder(const std::vector<Dish> &menu){
     }
     if(bevExp!=-1)
         ret.push_back(menu[bevExp].getId());
-    else
+    else{
+        ret.pop_back();
         ret.push_back(-1);
+    }
 
     return ret;
 }

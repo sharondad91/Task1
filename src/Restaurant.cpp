@@ -71,13 +71,14 @@ Restaurant::Restaurant(const std::string &configFilePath):
                 }
             }
         }
+                                                    //actionslog init??
 
     }
 
 void Restaurant::start() {
 
     open=true;
-    cout << "Restaurant is now open!";
+    cout << "Restaurant is now open!"<<endl;
 
     int customer_index=0;
 
@@ -123,10 +124,10 @@ void Restaurant::start() {
         if (action=="order")
         {
             int j=i+1;
-            while (line[j] != ' ')
+            while (j<line.size())
                 j++;
             string table_id = line.substr(i+1, j);
-            OpenTable(stoi(table_id), customers_input).act(*this);
+            Order(stoi(table_id)).act(*this);
         }
         if(action=="move")
         {
@@ -144,11 +145,16 @@ void Restaurant::start() {
         }
         if (action=="menu")
         {
+            PrintMenu().act(*this);
 
         }
         if (action=="status")
         {
-
+            int j=i+1;
+            while (j<line.size())
+                j++;
+            string table_id = line.substr(i+1, j);
+            PrintTableStatus(stoi(table_id)).act(*this);
         }
         if(action=="log")
         {
@@ -167,7 +173,9 @@ void Restaurant::start() {
     }
 }
 
-int Restaurant::getNumOfTables() const {return tables.size();}
+int Restaurant::getNumOfTables() const {
+    return tables.size();
+}
 
 Table* Restaurant::getTable(int ind){
     return tables[ind];
@@ -175,4 +183,6 @@ Table* Restaurant::getTable(int ind){
 
 const std::vector<BaseAction*>& Restaurant::getActionsLog() const; // Return a reference to the history of actions
 
-std::vector<Dish>& Restaurant::getMenu(){ return menu; }
+std::vector<Dish>& Restaurant::getMenu(){
+    return menu;
+}

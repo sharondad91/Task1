@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include "Customer.h"
+#include <vector>
 
 enum ActionStatus{
     PENDING, COMPLETED, ERROR

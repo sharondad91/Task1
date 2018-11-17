@@ -12,10 +12,18 @@ Dish::Dish(int d_id, std::string d_name, int d_price, DishType d_type):
     type(d_type)
 {}
 
-int Dish::getId() const {return id;}
+int Dish::getId() const {
+    return id;
+}
 
-std::string Dish::getName() const{return name;}
+std::string Dish::getName() const{
+    return name;
+}
 
-int Dish::getPrice() const{return price;}
+int Dish::getPrice() const{
+    return price;
+}
 
-DishType Dish::getType() const{return type;}
+DishType Dish::getType() const{
+    return type;
+}
