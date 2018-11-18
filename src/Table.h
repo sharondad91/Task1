@@ -15,6 +15,8 @@ public:
     void removeCustomer(int id);
     Customer* getCustomer(int id);
     std::vector<Customer*>& getCustomers();
+    void moveOrders(Table* srcTable, int customerId);
+    void setOrderList(std::vector<OrderPair> orderVec);
     std::vector<OrderPair>& getOrders();
     void order(const std::vector<Dish> &menu);
     void openTable();

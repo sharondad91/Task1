@@ -5,7 +5,7 @@
 #include "Action.h"
 #include "Table.h"
 #include "Restaurant.h"
-
+extern Restaurant* backup;
 using namespace std;
 
     BaseAction::BaseAction():
@@ -31,7 +31,7 @@ using namespace std;
     {}
 
     void OpenTable::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()>tableId)&&(restaurant.getTable(tableId)->isOpen() == true)) {
+        if((restaurant.getNumOfTables()<=tableId)||(restaurant.getTable(tableId)->isOpen() == false)) {
             std::string str = "Table does not exist or is already open";
             error(str);
         }
@@ -68,7 +68,7 @@ using namespace std;
     {}
 
     void Order::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()>tableId)&&(restaurant.getTable(tableId)->isOpen() == false)) {
+        if((restaurant.getNumOfTables()<=tableId)||(restaurant.getTable(tableId)->isOpen() == false)) {
             std::string str = "Table does not exist or is not open";
             error(str);
         }
@@ -105,19 +105,29 @@ using namespace std;
         BaseAction(), srcTable(src), dstTable(dst), id(customerId)
     {}
             //move bill with customer
-    void MoveCustomer::act(Restaurant &restaurant){
-        if(restaurant.getTable(dstTable)->getCapacity()>restaurant.getTable(dstTable)->getCustomers().size())
+        void MoveCustomer::act(Restaurant &restaurant){
+        bool exist= false;
+        bool isLegal=true;
+
+        if((restaurant.getNumOfTables()<=srcTable)||(restaurant.getNumOfTables()<=dstTable)||(restaurant.getTable(srcTable)->isOpen() == false)||(restaurant.getTable(dstTable)->isOpen() == false)) {
+            isLegal=false;
+        }
+        if(isLegal && restaurant.getTable(dstTable)->getCapacity()==restaurant.getTable(dstTable)->getCustomers().size())
+        {
+            isLegal=false;
+        }
+        for(int i=0;i<restaurant.getTable(srcTable)->getCustomers().size() && isLegal ;i++) {
+            if(restaurant.getTable(srcTable)->getCustomers()[i]->getId()==id)
+                exist=true;
+        }
+
+        if(isLegal && exist)
         {
             Customer * customer2= restaurant.getTable(srcTable)->getCustomer(id)->clone();
-            
-            //take all his orders to new vector
-            //push new vector to dest table
 
+            restaurant.getTable(dstTable)->moveOrders(restaurant.getTable(srcTable),id);
             restaurant.getTable(dstTable)->addCustomer(customer2);
             restaurant.getTable(srcTable)->removeCustomer(id);
-
-
-
             complete();
         }
         else {
@@ -145,7 +155,7 @@ using namespace std;
     {}
 
     void Close::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()>tableId) || (restaurant.getTable(tableId)->isOpen() == false) ) {
+        if((restaurant.getNumOfTables()<=tableId) || (restaurant.getTable(tableId)->isOpen() == false) ) {
             std::string str = "Table does not exist or is not open";
             error(str);
         }
@@ -254,6 +264,7 @@ using namespace std;
         {
             (restaurant.getActionsLog())[i]->toString();
         }
+        complete();
     }
     std::string PrintActionsLog::toString() const{
         cout<<"log Completed"<<endl;
@@ -265,7 +276,10 @@ using namespace std;
     {}
 
     void BackupRestaurant::act(Restaurant &restaurant){
-            //copy constructor
+        if(backup!= nullptr)
+            delete backup;
+        backup = new Restaurant(restaurant);
+        complete();
     }
     std::string BackupRestaurant::toString() const{
 
@@ -279,9 +293,15 @@ using namespace std;
 
     void RestoreResturant::act(Restaurant &restaurant){
             // = constructor
-
-
-
+        if(backup== nullptr)
+        {
+            std::string str = "No backup available";
+            error(str);
+        }
+        else{
+            restaurant=*backup;
+            complete();
+        }
     }
     std::string RestoreResturant::toString() const{
         cout<<"restore ";

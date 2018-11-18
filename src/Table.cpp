@@ -20,18 +20,25 @@ void Table::addCustomer(Customer* customer){
 }
 
 void Table::removeCustomer(int id){
-    vector<OrderPair> newOrderlist;
-
-    //     create new vector without my orders
-
-    for(int i=0;i<orderList.size();i++){
-        if(orderList[i].first==id)
-            orderList.erase(orderList.begin()+i);
-    }
-
-
-
     delete getCustomer(id);
+}
+
+void Table::moveOrders(Table* srcTable, int customerId){
+    vector<OrderPair> newOrderlist;
+    for(int i=0;i<srcTable->getOrders().size();i++){
+        if((srcTable->getOrders())[i].first==customerId)
+            orderList.push_back((srcTable->getOrders())[i]);
+        else
+            newOrderlist.push_back((srcTable->getOrders())[i]);
+    }
+    srcTable->setOrderList(newOrderlist);
+}
+
+void Table::setOrderList(vector<OrderPair> orderVec){
+    orderList.clear();
+    for(int i=0;i<orderVec.size();i++){
+        orderList.push_back(orderVec[i]);
+    }
 }
 
 Customer* Table::getCustomer(int id){
@@ -74,6 +81,7 @@ void Table::openTable(){
 }
 
 void Table::closeTable(){
+    orderList.clear();
     for(int i=0;i<customersList.size();i++)
     {
         removeCustomer(customersList[i]->getId());
