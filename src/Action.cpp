@@ -31,7 +31,7 @@ using namespace std;
     {}
 
     void OpenTable::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()<=tableId)||(restaurant.getTable(tableId)->isOpen() == false)) {
+        if((restaurant.getNumOfTables()<=tableId)||!(restaurant.getTable(tableId)->isOpen())) {
             std::string str = "Table does not exist or is already open";
             error(str);
         }
@@ -68,7 +68,7 @@ using namespace std;
     {}
 
     void Order::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()<=tableId)||(restaurant.getTable(tableId)->isOpen() == false)) {
+        if((restaurant.getNumOfTables()<=tableId)||!(restaurant.getTable(tableId)->isOpen())) {
             std::string str = "Table does not exist or is not open";
             error(str);
         }
@@ -110,7 +110,7 @@ using namespace std;
         bool exist= false;
         bool isLegal=true;
 
-        if((restaurant.getNumOfTables()<=srcTable)||(restaurant.getNumOfTables()<=dstTable)||(restaurant.getTable(srcTable)->isOpen() == false)||(restaurant.getTable(dstTable)->isOpen() == false)) {
+        if((restaurant.getNumOfTables()<=srcTable)||(restaurant.getNumOfTables()<=dstTable)||!(restaurant.getTable(srcTable)->isOpen())||!(restaurant.getTable(dstTable)->isOpen())) {
             isLegal=false;
         }
         if(isLegal && restaurant.getTable(dstTable)->getCapacity()==(int)restaurant.getTable(dstTable)->getCustomers().size())
@@ -157,7 +157,7 @@ using namespace std;
     {}
 
     void Close::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()<=tableId) || (restaurant.getTable(tableId)->isOpen() == false) ) {
+        if((restaurant.getNumOfTables()<=tableId) || (restaurant.getTable(tableId)->isOpen()) ) {
             std::string str = "Table does not exist or is not open";
             error(str);
         }
@@ -189,7 +189,7 @@ using namespace std;
         int i=0;
         while (i<restaurant.getNumOfTables())
         {
-            if(restaurant.getTable(i)->isOpen() == true)
+            if(restaurant.getTable(i)->isOpen())
             {
                 Close(i).act(restaurant);
             }
@@ -227,7 +227,7 @@ using namespace std;
     {}
 
     void PrintTableStatus::act(Restaurant &restaurant){
-        if(restaurant.getTable(tableId)->isOpen()==false)    //closed table
+        if(!restaurant.getTable(tableId)->isOpen())    //closed table
         {
             cout<<"Table "<<tableId<<" status: closed"<<endl;
         }
@@ -277,7 +277,7 @@ using namespace std;
     {}
 
     void BackupRestaurant::act(Restaurant &restaurant){
-        if(backup!= nullptr)
+        if(backup != nullptr)
             delete backup;
         backup = new Restaurant(restaurant);
         complete();

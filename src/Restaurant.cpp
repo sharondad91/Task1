@@ -157,6 +157,7 @@ Restaurant& Restaurant::operator=(Restaurant&& otherRest){  //move=
             otherRest.actionsLog[i]= nullptr;
         }
     }
+    return *this;
 }
 Restaurant::~Restaurant(){  //destructor
     for(int i=0;i<(int)tables.size();i++)

@@ -74,6 +74,7 @@ Table& Table::operator=(Table&& otherTable) {  //move=
             orderList.push_back(otherTable.orderList[i]);
         }
     }
+    return *this;
 }
 Table::~Table() {  //destructor
     for (int i = 0; i < (int)customersList.size(); i++) {
@@ -117,7 +118,7 @@ void Table::setOrderList(vector<OrderPair> orderVec){
 }
 
 Customer* Table::getCustomer(int id){
-    for(int i=0;i<c(int)ustomersList.size();i++)
+    for(int i=0;i<(int)customersList.size();i++)
     {
         if(customersList[i]->getId()==id)
             return customersList[i];
