@@ -12,6 +12,13 @@ class Restaurant{
 public:
 	Restaurant();
     Restaurant(const std::string &configFilePath);
+
+    Restaurant(const Restaurant& otherRest);  //copy constructor
+    Restaurant(Restaurant&& otherRest); //move constructor
+    Restaurant& operator=(const Restaurant& otherRest);    //copy=
+    Restaurant& operator=(Restaurant&& otherRest);  //move=
+    virtual ~Restaurant();  //destructor
+
     void start();
     int getNumOfTables() const;
     Table* getTable(int ind);

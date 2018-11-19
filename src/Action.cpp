@@ -38,7 +38,7 @@ using namespace std;
         else{
             restaurant.getTable(tableId)->openTable();                              //.............?
             int i=0;
-            while (i < customers.size()) {
+            while (i < (int)customers.size()) {
                 restaurant.getTable(tableId)->addCustomer(customers[i]);
                 i++;
             }
@@ -49,7 +49,7 @@ using namespace std;
 
     std::string OpenTable::toString() const{
         cout<<"open "<<tableId<<" ";
-        for (int i=0;i<customers.size();i++)
+        for (int i=0;i<(int)customers.size();i++)
         {
             cout<<customers[i]->getName()<<","<<customers[i]->toString()<<" ";
         }
@@ -77,7 +77,7 @@ using namespace std;
 
             vector<OrderPair>& orders= restaurant.getTable(tableId)->getOrders();
             int i=0;
-            while(i<orders.size())
+            while(i<(int)orders.size())
             {
                 int customer_id= orders[i].first;
                 string customer_name= restaurant.getTable(tableId)->getCustomer(customer_id)->getName();
@@ -112,11 +112,11 @@ using namespace std;
         if((restaurant.getNumOfTables()<=srcTable)||(restaurant.getNumOfTables()<=dstTable)||(restaurant.getTable(srcTable)->isOpen() == false)||(restaurant.getTable(dstTable)->isOpen() == false)) {
             isLegal=false;
         }
-        if(isLegal && restaurant.getTable(dstTable)->getCapacity()==restaurant.getTable(dstTable)->getCustomers().size())
+        if(isLegal && restaurant.getTable(dstTable)->getCapacity()==(int)restaurant.getTable(dstTable)->getCustomers().size())
         {
             isLegal=false;
         }
-        for(int i=0;i<restaurant.getTable(srcTable)->getCustomers().size() && isLegal ;i++) {
+        for(int i=0;i<(int)restaurant.getTable(srcTable)->getCustomers().size() && isLegal ;i++) {
             if(restaurant.getTable(srcTable)->getCustomers()[i]->getId()==id)
                 exist=true;
         }
@@ -206,7 +206,7 @@ using namespace std;
     void PrintMenu::act(Restaurant &restaurant){
         std::vector<Dish>& menu= restaurant.getMenu();          //print menu
         int i=0;
-        while(i<menu.size())
+        while(i<(int)menu.size())
         {
             cout<<menu[i].getName()<<" "<<menu[i].getType()<<" "<<menu[i].getPrice()<<"NIS"<<endl;
             i++;
@@ -234,12 +234,12 @@ using namespace std;
                 //print status, customers, orders
             cout<<"Table "<<tableId<<" status: open"<<endl;
             cout<<"Customers:"<<endl;
-            for(int i=0;i<restaurant.getTable(tableId)->getCustomers().size();i++)
+            for(int i=0;i<(int)restaurant.getTable(tableId)->getCustomers().size();i++)
             {
                 cout<<restaurant.getTable(tableId)->getCustomer(i)->getId()<<" "<<restaurant.getTable(tableId)->getCustomer(i)->getName()<<endl;
             }
             cout<<"Orders:"<<endl;
-            for(int i=0;i<restaurant.getTable(tableId)->getOrders().size();i++)
+            for(int i=0;i<(int)restaurant.getTable(tableId)->getOrders().size();i++)
             {
                 cout<<restaurant.getTable(tableId)->getOrders()[i].second.getName()<<" "<<restaurant.getTable(tableId)->getOrders()[i].second.getPrice()<<"NIS "<<restaurant.getTable(tableId)->getOrders()[i].first<<endl;
             }
@@ -260,7 +260,7 @@ using namespace std;
     {}
 
     void PrintActionsLog::act(Restaurant &restaurant){
-        for(int i=0;i<restaurant.getActionsLog().size();i++)
+        for(int i=0;i<(int)restaurant.getActionsLog().size();i++)
         {
             (restaurant.getActionsLog())[i]->toString();
         }

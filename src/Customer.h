@@ -15,11 +15,11 @@ public:
     std::string getName() const;
     int getId() const;
 
-    Customer(const Customer& otherCustomer);  //copy constructor
-    Customer(Customer&& otherCustomer); //move constructor
-    //Customer& operator=(const Customer&& otherCustomer);    //copy=
-    //Customer& operator=(Customer&& otherCustomer);  //move=
-    ~Customer();  //destructor
+//    Customer(const Customer& otherCustomer);  //copy constructor
+//    Customer(Customer&& otherCustomer); //move constructor
+//    //Customer& operator=(const Customer&& otherCustomer);    //copy=
+//    //Customer& operator=(Customer&& otherCustomer);  //move=
+//    ~Customer();  //destructor
 
 private:
     const std::string name;
@@ -35,9 +35,9 @@ public:
     std::string toString() const;
     Customer* clone();
 
-    VegetarianCustomer(const VegetarianCustomer& otherCustomer);  //copy constructor
-    VegetarianCustomer(VegetarianCustomer&& otherCustomer); //move constructor
-    ~VegetarianCustomer();  //destructor
+//    VegetarianCustomer(const VegetarianCustomer& otherCustomer);  //copy constructor
+//    VegetarianCustomer(VegetarianCustomer&& otherCustomer); //move constructor
+//    ~VegetarianCustomer();  //destructor
 
 private:
 
@@ -52,9 +52,9 @@ public:
     std::string toString() const;
     Customer* clone();
 
-    CheapCustomer(const CheapCustomer& otherCustomer);  //copy constructor
-    CheapCustomer(CheapCustomer&& otherCustomer); //move constructor
-    ~CheapCustomer();  //destructor
+//    CheapCustomer(const CheapCustomer& otherCustomer);  //copy constructor
+//    CheapCustomer(CheapCustomer&& otherCustomer); //move constructor
+//    ~CheapCustomer();  //destructor
 
 private:
 	bool first;
@@ -69,9 +69,9 @@ public:
     std::string toString() const;
     Customer* clone();
 
-    SpicyCustomer(const SpicyCustomer& otherCustomer);  //copy constructor
-    SpicyCustomer(SpicyCustomer&& otherCustomer); //move constructor
-    ~SpicyCustomer();  //destructor
+//    SpicyCustomer(const SpicyCustomer& otherCustomer);  //copy constructor
+//    SpicyCustomer(SpicyCustomer&& otherCustomer); //move constructor
+//    ~SpicyCustomer();  //destructor
 
 private:
 	bool first;
@@ -86,9 +86,9 @@ public:
     std::string toString() const;
     Customer* clone();
 
-    AlchoholicCustomer(const AlchoholicCustomer& otherCustomer);  //copy constructor
-    AlchoholicCustomer(AlchoholicCustomer&& otherCustomer); //move constructor
-    ~AlchoholicCustomer();  //destructor
+//    AlchoholicCustomer(const AlchoholicCustomer& otherCustomer);  //copy constructor
+//    AlchoholicCustomer(AlchoholicCustomer&& otherCustomer); //move constructor
+//    ~AlchoholicCustomer();  //destructor
 
 private:
 	int lastID;

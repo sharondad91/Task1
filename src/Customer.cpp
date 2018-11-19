@@ -19,15 +19,6 @@ int Customer::getId() const {
     return id;
 }
 
-Customer::Customer(const Customer& otherCustomer) :  //copy constructor
-name(otherCustomer.getName()),id(otherCustomer.getId())
-{}
-Customer::Customer(Customer&& otherCustomer): //move constructor
-name(otherCustomer.getName()),id(otherCustomer.getId())
-{}
-Customer::~Customer(){  //destructor
-}
-
 VegetarianCustomer::VegetarianCustomer() :
         Customer() {}
 
@@ -48,14 +39,6 @@ Customer *VegetarianCustomer::clone() {
     return new VegetarianCustomer(*this);
 }
 
-VegetarianCustomer::VegetarianCustomer(const VegetarianCustomer &otherCustomer) :  //copy constructor
-    Customer(otherCustomer)
-{}
-VegetarianCustomer::VegetarianCustomer(VegetarianCustomer&& otherCustomer): //move constructor
-    Customer(otherCustomer)
-{}
-VegetarianCustomer::~VegetarianCustomer() {  //destructor
-}
 
 CheapCustomer::CheapCustomer() :
         Customer(), first(false) {}
@@ -79,15 +62,6 @@ std::string CheapCustomer::toString() const {
 
 Customer *CheapCustomer::clone() {
     return new CheapCustomer(*this);
-}
-
-CheapCustomer::CheapCustomer(const CheapCustomer& otherCustomer):  //copy constructor
-        Customer(otherCustomer), first(otherCustomer.first)
-{}
-CheapCustomer::CheapCustomer(CheapCustomer&& otherCustomer): //move constructor
-        Customer(otherCustomer), first(otherCustomer.first)
-{}
-CheapCustomer::~CheapCustomer() {  //destructor
 }
 
 SpicyCustomer::SpicyCustomer() :
@@ -115,14 +89,6 @@ Customer *SpicyCustomer::clone() {
     return new SpicyCustomer(*this);
 }
 
-SpicyCustomer::SpicyCustomer(const SpicyCustomer& otherCustomer):  //copy constructor
-        Customer(otherCustomer), first(otherCustomer.first)
-{}
-SpicyCustomer::SpicyCustomer(SpicyCustomer&& otherCustomer): //move constructor
-        Customer(otherCustomer), first(otherCustomer.first)
-{}
-SpicyCustomer::~SpicyCustomer() {  //destructor
-}
 
 AlchoholicCustomer::AlchoholicCustomer() :
         Customer(), lastID(-1) {}
@@ -152,20 +118,11 @@ Customer *AlchoholicCustomer::clone() {
     return new AlchoholicCustomer(*this);
 }
 
-AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer& otherCustomer):  //copy constructor
-    Customer(otherCustomer),lastID(otherCustomer.lastID)
-{}
-AlchoholicCustomer::AlchoholicCustomer(AlchoholicCustomer&& otherCustomer): //move constructor
-    Customer(otherCustomer),lastID(otherCustomer.lastID)
-{}
-AlchoholicCustomer::~AlchoholicCustomer() {  //destructor
-}
-
 
 int FindCheapDish(const std::vector<Dish> &menu) {
     int i = 1;
     int minimumInd = 0;
-    while (i < menu.size()) {
+    while (i < (int)menu.size()) {
         if (menu[i].getPrice() < menu[minimumInd].getPrice())
             minimumInd = i;
         i++;
@@ -177,7 +134,7 @@ int FindExpansiveSpicy(const std::vector<Dish> &menu) {
     int i = 0;
     int maximumInd = -1;
     bool found = false;
-    while (i < menu.size()) {
+    while (i < (int)menu.size()) {
         if (!found)
             if (menu[i].getType() == SPC) {
                 maximumInd = i;
@@ -194,7 +151,7 @@ int FindCheapestBvg(const std::vector<Dish> &menu) {
     int i = 0;
     int minimumInd = -1;
     bool found = false;
-    while (i < menu.size()) {
+    while (i < (int)menu.size()) {
         if (!found)
             if (menu[i].getType() == BVG) {
                 minimumInd = i;
@@ -212,7 +169,7 @@ std::vector<int> vegOrder(const std::vector<Dish> &menu) {
     int i = 0;
     int vegDish = 0;
     std::vector<int> ret;
-    while (i < menu.size()) {
+    while (i <(int) menu.size()) {
         if (menu[i].getType() == VEG)
             vegDish = i;
         i++;
@@ -225,7 +182,7 @@ std::vector<int> vegOrder(const std::vector<Dish> &menu) {
     i = 0;
     int bevExp = -1;
     bool found = false;
-    while (i < menu.size()) {
+    while (i < (int)menu.size()) {
         if (!found)
             if (menu[i].getType() == BVG) {
                 bevExp = i;
@@ -252,12 +209,12 @@ int FindCheapestAlc(const std::vector<Dish> &menu, int id) {
     int maxMinimum = INTMAX_MAX;
     int currentMinPrice = -1;
     if (id < 0)
-        i = menu.size();
+        i = (int)menu.size();
     else {
         i = id + 1;
         currentMinPrice = menu[id].getPrice();
     }
-    while (i < menu.size()) {
+    while (i < (int)menu.size()) {
         if (i > id && menu[i].getType() == ALC && (menu[i].getPrice() == currentMinPrice) && !found) {
             minimumInd = i;
             found = true;
@@ -265,7 +222,7 @@ int FindCheapestAlc(const std::vector<Dish> &menu, int id) {
         i++;
     }
     i = 0;
-    while (!found && i < menu.size()) {
+    while (!found && i < (int)menu.size()) {
         if (menu[i].getType() == ALC && (menu[i].getPrice() > currentMinPrice) && (menu[i].getPrice() < maxMinimum)) {
             maxMinimum = menu[i].getPrice();
             minimumInd = i;
@@ -277,7 +234,7 @@ int FindCheapestAlc(const std::vector<Dish> &menu, int id) {
 }
 
 int FindExpansiveAlc(const std::vector<Dish> &menu) {                                //....?
-    int i = menu.size() - 1;
+    int i = (int)menu.size() - 1;
     int maximumInd = -1;
     bool found = false;
     while (i > -1) {

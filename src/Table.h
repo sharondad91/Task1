@@ -9,7 +9,15 @@ typedef std::pair<int, Dish> OrderPair;
 
 class Table{
 public:
+    Table();
     Table(int t_capacity);
+
+    Table(const Table& otherTable);  //copy constructor
+    Table(Table&& otherTable); //move constructor
+    Table& operator=(const Table& otherTable);    //copy=
+    Table& operator=(Table&& otherTable);  //move=
+    virtual ~Table();  //destructor
+
     int getCapacity() const;
     void addCustomer(Customer* customer);
     void removeCustomer(int id);

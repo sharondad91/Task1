@@ -10,6 +10,10 @@ Restaurant::Restaurant():
     open (false),tables (),menu (),actionsLog ()
 {}
 
+Restaurant::Restaurant():
+    open (false),tables (),menu (),actionsLog ()
+{}
+
 Restaurant::Restaurant(const std::string &configFilePath):
 
     open (false),
@@ -75,6 +79,97 @@ Restaurant::Restaurant(const std::string &configFilePath):
 
     }
 
+
+Restaurant::Restaurant(const Restaurant& otherRest):  //copy constructor
+    open(otherRest.open), tables(), menu(), actionsLog()
+{
+    for(int i=0;i<(int)otherRest.tables.size();i++)
+    {
+        tables.push_back(new Table(*otherRest.tables[i]));
+    }
+    for(int i=0;i<(int)otherRest.menu.size();i++)
+    {
+        menu.push_back(otherRest.menu[i]);
+    }
+    for(int i=0;i<(int)otherRest.actionsLog.size();i++)
+    {
+        actionsLog.push_back(otherRest.actionsLog[i]);
+    }
+}
+Restaurant::Restaurant(Restaurant&& otherRest): //move constructor
+        open(otherRest.open), tables(), menu(), actionsLog()
+{
+    for(int i=0;i<(int)otherRest.tables.size();i++)
+    {
+        tables.push_back(new Table(*otherRest.tables[i]));
+        delete otherRest.tables[i];
+        otherRest.tables[i]= nullptr;
+    }
+    for(int i=0;i<(int)otherRest.menu.size();i++)
+    {
+        menu.push_back(otherRest.menu[i]);
+    }
+    for(int i=0;i<(int)otherRest.actionsLog.size();i++)
+    {
+        actionsLog.push_back(otherRest.actionsLog[i]);
+        otherRest.actionsLog[i]= nullptr;
+    }
+}
+
+Restaurant& Restaurant::operator=(const Restaurant& otherRest) {    //copy=
+
+    if(this==&otherRest)
+        return *this;
+    this->open=otherRest.open;
+
+    for(int i=0;i<(int)otherRest.tables.size();i++)
+    {
+        if(tables[i]!= nullptr)
+            delete tables[i];
+        tables.push_back(new Table(*otherRest.tables[i]));
+    }
+    for(int i=0;i<(int)otherRest.menu.size();i++)
+    {
+        menu.push_back(otherRest.menu[i]);
+    }
+    for(int i=0;i<(int)otherRest.actionsLog.size();i++)
+    {
+        actionsLog.push_back(otherRest.actionsLog[i]);
+    }
+    return *this;
+}
+Restaurant& Restaurant::operator=(Restaurant&& otherRest){  //move=
+    if (this != &otherRest) {
+        this->open=otherRest.open;
+
+        for(int i=0;i<(int)otherRest.tables.size();i++)
+        {
+            tables.push_back(otherRest.tables[i]);
+            otherRest.tables[i]= nullptr;
+        }
+        for(int i=0;i<(int)otherRest.menu.size();i++)
+        {
+            menu.push_back(otherRest.menu[i]);
+        }
+        for(int i=0;i<(int)otherRest.actionsLog.size();i++)
+        {
+            actionsLog.push_back(otherRest.actionsLog[i]);
+            otherRest.actionsLog[i]= nullptr;
+        }
+    }
+}
+Restaurant::~Restaurant(){  //destructor
+    for(int i=0;i<(int)tables.size();i++)
+    {
+        if(tables[i]!= nullptr) {
+            delete tables[i];
+            tables[i] = nullptr;
+        }
+    }
+}
+
+
+
 void Restaurant::start() {
 
     open=true;
@@ -101,7 +196,7 @@ void Restaurant::start() {
             j++;
             i=j;
 
-            while (j<line.size())
+            while (j<(int)line.size())
             {
                 while(line[j] != ',')
                     j++;
@@ -126,7 +221,7 @@ void Restaurant::start() {
         if (action=="order")
         {
             int j=i+1;
-            while (j<line.size())
+            while (j<(int)line.size())
                 j++;
             string table_id = line.substr(i+1, j);
 
@@ -146,7 +241,7 @@ void Restaurant::start() {
             while (line[j] != ' ')
                 j++;
             string destable = line.substr(i, j);
-            string idcustomer = line.substr(j+1, line.size());
+            string idcustomer = line.substr(j+1, (int)line.size());
 
             MoveCustomer* action1= new MoveCustomer(stoi(srctable),stoi(destable),stoi(idcustomer));
             action1->act(*this);
@@ -155,7 +250,7 @@ void Restaurant::start() {
         if(action=="close")
         {
             int j=i+1;
-            while (j<line.size())
+            while (j<(int)line.size())
                 j++;
             string table_id = line.substr(i+1, j);
 
@@ -181,7 +276,7 @@ void Restaurant::start() {
         if (action=="status")
         {
             int j=i+1;
-            while (j<line.size())
+            while (j<(int)line.size())
                 j++;
             string table_id = line.substr(i+1, j);
 
@@ -213,7 +308,7 @@ void Restaurant::start() {
 }
 
 int Restaurant::getNumOfTables() const {
-    return tables.size();
+    return (int)tables.size();
 }
 
 Table* Restaurant::getTable(int ind){
