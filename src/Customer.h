@@ -7,12 +7,19 @@
 
 class Customer{
 public:
+    Customer();
     Customer(std::string c_name, int c_id);
     virtual std::vector<int> order(const std::vector<Dish> &menu)=0;
     virtual std::string toString() const = 0;
     virtual Customer* clone() =0;
     std::string getName() const;
     int getId() const;
+
+    Customer(const Customer& otherCustomer);  //copy constructor
+    Customer(Customer&& otherCustomer); //move constructor
+    //Customer& operator=(const Customer&& otherCustomer);    //copy=
+    //Customer& operator=(Customer&& otherCustomer);  //move=
+    ~Customer();  //destructor
 
 private:
     const std::string name;
@@ -22,6 +29,7 @@ private:
 
 class VegetarianCustomer : public Customer {
 public:
+    VegetarianCustomer();
 	VegetarianCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
@@ -29,8 +37,6 @@ public:
 
     VegetarianCustomer(const VegetarianCustomer& otherCustomer);  //copy constructor
     VegetarianCustomer(VegetarianCustomer&& otherCustomer); //move constructor
-    VegetarianCustomer& operator=(const VegetarianCustomer&& otherCustomer);    //copy=
-    VegetarianCustomer& operator=(VegetarianCustomer&& otherCustomer);  //move=
     ~VegetarianCustomer();  //destructor
 
 private:
@@ -40,6 +46,7 @@ private:
 
 class CheapCustomer : public Customer {
 public:
+    CheapCustomer();
 	CheapCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
@@ -47,8 +54,6 @@ public:
 
     CheapCustomer(const CheapCustomer& otherCustomer);  //copy constructor
     CheapCustomer(CheapCustomer&& otherCustomer); //move constructor
-    CheapCustomer& operator=(const CheapCustomer&& otherCustomer);    //copy=
-    CheapCustomer& operator=(CheapCustomer&& otherCustomer);  //move=
     ~CheapCustomer();  //destructor
 
 private:
@@ -58,6 +63,7 @@ private:
 
 class SpicyCustomer : public Customer {
 public:
+    SpicyCustomer();
 	SpicyCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
@@ -65,8 +71,6 @@ public:
 
     SpicyCustomer(const SpicyCustomer& otherCustomer);  //copy constructor
     SpicyCustomer(SpicyCustomer&& otherCustomer); //move constructor
-    SpicyCustomer& operator=(const SpicyCustomer&& otherCustomer);    //copy=
-    SpicyCustomer& operator=(SpicyCustomer&& otherCustomer);  //move=
     ~SpicyCustomer();  //destructor
 
 private:
@@ -76,6 +80,7 @@ private:
 
 class AlchoholicCustomer : public Customer {
 public:
+    AlchoholicCustomer();
 	AlchoholicCustomer(std::string name, int id);
     std::vector<int> order(const std::vector<Dish> &menu);
     std::string toString() const;
@@ -83,8 +88,6 @@ public:
 
     AlchoholicCustomer(const AlchoholicCustomer& otherCustomer);  //copy constructor
     AlchoholicCustomer(AlchoholicCustomer&& otherCustomer); //move constructor
-    AlchoholicCustomer& operator=(const AlchoholicCustomer&& otherCustomer);    //copy=
-    AlchoholicCustomer& operator=(AlchoholicCustomer&& otherCustomer);  //move=
     ~AlchoholicCustomer();  //destructor
 
 private:

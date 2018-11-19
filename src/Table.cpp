@@ -66,9 +66,11 @@ void Table::order(const std::vector<Dish> &menu){
         {
             for(int j=0;j<orderlistid.size();j++)
             {
-                Dish * dish2 = new Dish(menu[orderlistid[j]]);
-                OrderPair* tmpOrder= new OrderPair(customersList[i]->getId(),*dish2);
-                orderList.push_back(*tmpOrder);
+                //Dish * dish2 = new Dish(menu[orderlistid[j]]);
+                Dish dish2 = Dish(menu[orderlistid[j]]);
+                //OrderPair* tmpOrder= new OrderPair(customersList[i]->getId(),dish2);
+                OrderPair tmpOrder= OrderPair(customersList[i]->getId(),dish2);
+                orderList.push_back(tmpOrder);
             }
         }
 

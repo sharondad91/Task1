@@ -5,6 +5,9 @@
 #include "Customer.h"
 
 
+Customer::Customer() :
+        name(), id() {}
+
 Customer::Customer(std::string c_name, int c_id) :
         name(c_name), id(c_id) {}
 
@@ -16,6 +19,17 @@ int Customer::getId() const {
     return id;
 }
 
+Customer::Customer(const Customer& otherCustomer) :  //copy constructor
+name(otherCustomer.getName()),id(otherCustomer.getId())
+{}
+Customer::Customer(Customer&& otherCustomer): //move constructor
+name(otherCustomer.getName()),id(otherCustomer.getId())
+{}
+Customer::~Customer(){  //destructor
+}
+
+VegetarianCustomer::VegetarianCustomer() :
+        Customer() {}
 
 VegetarianCustomer::VegetarianCustomer(std::string name, int id) :
         Customer(name, id) {}
@@ -37,10 +51,14 @@ Customer *VegetarianCustomer::clone() {
 VegetarianCustomer::VegetarianCustomer(const VegetarianCustomer &otherCustomer) :  //copy constructor
     Customer(otherCustomer)
 {}
-VegetarianCustomer::VegetarianCustomer(VegetarianCustomer&& otherCustomer); //move constructor
-VegetarianCustomer::VegetarianCustomer &operator=(const VegetarianCustomer&& otherCustomer);    //copy=
-VegetarianCustomer::VegetarianCustomer &operator=(VegetarianCustomer&& otherCustomer);  //move=
-VegetarianCustomer::~VegetarianCustomer();  //destructor
+VegetarianCustomer::VegetarianCustomer(VegetarianCustomer&& otherCustomer): //move constructor
+    Customer(otherCustomer)
+{}
+VegetarianCustomer::~VegetarianCustomer() {  //destructor
+}
+
+CheapCustomer::CheapCustomer() :
+        Customer(), first(false) {}
 
 CheapCustomer::CheapCustomer(std::string name, int id) :
         Customer(name, id), first(false) {}
@@ -63,6 +81,17 @@ Customer *CheapCustomer::clone() {
     return new CheapCustomer(*this);
 }
 
+CheapCustomer::CheapCustomer(const CheapCustomer& otherCustomer):  //copy constructor
+        Customer(otherCustomer), first(otherCustomer.first)
+{}
+CheapCustomer::CheapCustomer(CheapCustomer&& otherCustomer): //move constructor
+        Customer(otherCustomer), first(otherCustomer.first)
+{}
+CheapCustomer::~CheapCustomer() {  //destructor
+}
+
+SpicyCustomer::SpicyCustomer() :
+        Customer(), first(false) {}
 
 SpicyCustomer::SpicyCustomer(std::string name, int id) :
         Customer(name, id), first(false) {}
@@ -86,6 +115,17 @@ Customer *SpicyCustomer::clone() {
     return new SpicyCustomer(*this);
 }
 
+SpicyCustomer::SpicyCustomer(const SpicyCustomer& otherCustomer):  //copy constructor
+        Customer(otherCustomer), first(otherCustomer.first)
+{}
+SpicyCustomer::SpicyCustomer(SpicyCustomer&& otherCustomer): //move constructor
+        Customer(otherCustomer), first(otherCustomer.first)
+{}
+SpicyCustomer::~SpicyCustomer() {  //destructor
+}
+
+AlchoholicCustomer::AlchoholicCustomer() :
+        Customer(), lastID(-1) {}
 
 AlchoholicCustomer::AlchoholicCustomer(std::string name, int id) :
         Customer(name, id), lastID(-1) {}
@@ -110,6 +150,15 @@ std::string AlchoholicCustomer::toString() const {
 
 Customer *AlchoholicCustomer::clone() {
     return new AlchoholicCustomer(*this);
+}
+
+AlchoholicCustomer::AlchoholicCustomer(const AlchoholicCustomer& otherCustomer):  //copy constructor
+    Customer(otherCustomer),lastID(otherCustomer.lastID)
+{}
+AlchoholicCustomer::AlchoholicCustomer(AlchoholicCustomer&& otherCustomer): //move constructor
+    Customer(otherCustomer),lastID(otherCustomer.lastID)
+{}
+AlchoholicCustomer::~AlchoholicCustomer() {  //destructor
 }
 
 
