@@ -17,9 +17,7 @@ public:
 
 //    Customer(const Customer& otherCustomer);  //copy constructor
 //    Customer(Customer&& otherCustomer); //move constructor
-//    //Customer& operator=(const Customer&& otherCustomer);    //copy=
-//    //Customer& operator=(Customer&& otherCustomer);  //move=
-//    ~Customer();  //destructor
+    virtual ~Customer()=0;  //destructor
 
 private:
     const std::string name;
@@ -37,7 +35,7 @@ public:
 
 //    VegetarianCustomer(const VegetarianCustomer& otherCustomer);  //copy constructor
 //    VegetarianCustomer(VegetarianCustomer&& otherCustomer); //move constructor
-//    ~VegetarianCustomer();  //destructor
+    virtual ~VegetarianCustomer()=0;  //destructor
 
 private:
 
@@ -54,7 +52,7 @@ public:
 
 //    CheapCustomer(const CheapCustomer& otherCustomer);  //copy constructor
 //    CheapCustomer(CheapCustomer&& otherCustomer); //move constructor
-//    ~CheapCustomer();  //destructor
+    virtual ~CheapCustomer()=0;  //destructor
 
 private:
 	bool first;
@@ -71,7 +69,7 @@ public:
 
 //    SpicyCustomer(const SpicyCustomer& otherCustomer);  //copy constructor
 //    SpicyCustomer(SpicyCustomer&& otherCustomer); //move constructor
-//    ~SpicyCustomer();  //destructor
+    virtual ~SpicyCustomer()=0;  //destructor
 
 private:
 	bool first;
@@ -88,7 +86,7 @@ public:
 
 //    AlchoholicCustomer(const AlchoholicCustomer& otherCustomer);  //copy constructor
 //    AlchoholicCustomer(AlchoholicCustomer&& otherCustomer); //move constructor
-//    ~AlchoholicCustomer();  //destructor
+	virtual ~AlchoholicCustomer()=0;  //destructor
 
 private:
 	int lastID;

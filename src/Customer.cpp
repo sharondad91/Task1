@@ -19,6 +19,9 @@ int Customer::getId() const {
     return id;
 }
 
+Customer::~Customer(){  //destructor
+}
+
 VegetarianCustomer::VegetarianCustomer() :
         Customer() {}
 
@@ -39,6 +42,8 @@ Customer *VegetarianCustomer::clone() {
     return new VegetarianCustomer(*this);
 }
 
+VegetarianCustomer::~VegetarianCustomer(){
+}
 
 CheapCustomer::CheapCustomer() :
         Customer(), first(false) {}
@@ -62,6 +67,9 @@ std::string CheapCustomer::toString() const {
 
 Customer *CheapCustomer::clone() {
     return new CheapCustomer(*this);
+}
+
+CheapCustomer::~CheapCustomer(){
 }
 
 SpicyCustomer::SpicyCustomer() :
@@ -89,6 +97,8 @@ Customer *SpicyCustomer::clone() {
     return new SpicyCustomer(*this);
 }
 
+SpicyCustomer::~SpicyCustomer(){
+}
 
 AlchoholicCustomer::AlchoholicCustomer() :
         Customer(), lastID(-1) {}
@@ -108,6 +118,9 @@ std::vector<int> AlchoholicCustomer::order(const std::vector<Dish> &menu) {
     }
     return vec;
 
+}
+
+AlchoholicCustomer::~AlchoholicCustomer(){
 }
 
 std::string AlchoholicCustomer::toString() const {

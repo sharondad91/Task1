@@ -123,6 +123,7 @@ Customer* Table::getCustomer(int id){
         if(customersList[i]->getId()==id)
             return customersList[i];
     }
+    return nullptr;
 }
 
 std::vector<Customer*>& Table::getCustomers(){

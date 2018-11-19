@@ -10,10 +10,6 @@ Restaurant::Restaurant():
     open (false),tables (),menu (),actionsLog ()
 {}
 
-Restaurant::Restaurant():
-    open (false),tables (),menu (),actionsLog ()
-{}
-
 Restaurant::Restaurant(const std::string &configFilePath):
 
     open (false),
@@ -41,8 +37,8 @@ Restaurant::Restaurant(const std::string &configFilePath):
                         string token;
                         int start = 0;
                         int end = 0;
-                        while (end != line.length()) {
-                            while (line[end] != ',' & (end != line.length() - 1))
+                        while (end != (int)line.length()) {
+                            while ((end != (int)line.length() - 1) && line[end] != ',')
                                 end++;
                             token = line.substr(start, end-start);
                             end++;
@@ -66,7 +62,7 @@ Restaurant::Restaurant(const std::string &configFilePath):
                     if (dishstr=="SPC")
                         dishType = SPC;
                     if (dishstr=="BVG")
-                        dishType = BVG,;
+                        dishType = BVG;
                     else
                         dishType = ALC;
 
@@ -288,7 +284,7 @@ void Restaurant::start() {
         if(action=="log")
         {
 
-            PrintActionsLog* action1= new PrintActionsLog());
+            PrintActionsLog* action1= new PrintActionsLog();
             action1->act(*this);
             actionsLog.push_back(action1);
 
@@ -316,7 +312,9 @@ Table* Restaurant::getTable(int ind){
     return tables[ind];
 }
 
-const std::vector<BaseAction*>& Restaurant::getActionsLog() const; // Return a reference to the history of actions
+const std::vector<BaseAction*>& Restaurant::getActionsLog() const { // Return a reference to the history of actions
+    return actionsLog;
+}
 
 std::vector<Dish>& Restaurant::getMenu(){
     return menu;
