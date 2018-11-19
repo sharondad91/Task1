@@ -148,12 +148,13 @@ int FindExpansiveSpicy(const std::vector<Dish> &menu) {
     int maximumInd = -1;
     bool found = false;
     while (i < (int)menu.size()) {
-        if (!(found))
+        if (!(found)) {
             if (menu[i].getType() == SPC) {
                 maximumInd = i;
                 found = true;
             } else if (menu[i].getType() == SPC && (menu[i].getPrice() > menu[maximumInd].getPrice()))
                 maximumInd = i;
+        }
         i++;
     }
     return maximumInd;
@@ -165,12 +166,13 @@ int FindCheapestBvg(const std::vector<Dish> &menu) {
     int minimumInd = -1;
     bool found = false;
     while (i < (int)menu.size()) {
-        if (!(found))
+        if (!(found)) {
             if (menu[i].getType() == BVG) {
                 minimumInd = i;
                 found = true;
             } else if (menu[i].getType() == BVG && (menu[i].getPrice() < menu[minimumInd].getPrice()))
                 minimumInd = i;
+        }
         i++;
     }
 
@@ -196,12 +198,13 @@ std::vector<int> vegOrder(const std::vector<Dish> &menu) {
     int bevExp = -1;
     bool found = false;
     while (i < (int)menu.size()) {
-        if (!(found))
+        if (!(found)) {
             if (menu[i].getType() == BVG) {
                 bevExp = i;
                 found = true;
             } else if (menu[i].getType() == BVG && (menu[i].getPrice() > menu[bevExp].getPrice()))
                 bevExp = i;
+        }
         i++;
     }
     if (bevExp != -1)
@@ -219,7 +222,8 @@ int FindCheapestAlc(const std::vector<Dish> &menu, int id) {
     int i = 0;
     bool found = false;
     int minimumInd = -1;
-    int maxMinimum = INTMAX_MAX-1;
+
+    int maxMinimum = FindExpansivePrice(menu)*2;
     int currentMinPrice = -1;
     if (id < 0)
         i = (int)menu.size();
@@ -251,13 +255,26 @@ int FindExpansiveAlc(const std::vector<Dish> &menu) {                           
     int maximumInd = -1;
     bool found = false;
     while (i > -1) {
-        if (!(found))
+        if (!(found)) {
             if (menu[i].getType() == ALC) {
                 maximumInd = i;
                 found = true;
             } else if (menu[i].getType() == ALC && (menu[i].getPrice() > menu[maximumInd].getPrice()))
                 maximumInd = i;
+        }
         i--;
     }
     return maximumInd;
+}
+
+
+int FindExpansivePrice(const std::vector<Dish> &menu) {                                //....?
+    int i =1;
+    int maxPrice = menu[0].getPrice();
+    while (i < (int)menu.size()) {
+        if(maxPrice<menu[i].getPrice())
+            maxPrice = menu[i].getPrice();
+        i++;
+    }
+    return maxPrice;
 }

@@ -98,5 +98,6 @@ int FindCheapestBvg(const std::vector<Dish> &menu);
 std::vector<int> vegOrder(const std::vector<Dish> &menu);
 int FindCheapestAlc(const std::vector<Dish> &menu, int id);
 int FindExpansiveAlc(const std::vector<Dish> &menu);
+int FindExpansivePrice(const std::vector<Dish> &menu);
 
 #endif
