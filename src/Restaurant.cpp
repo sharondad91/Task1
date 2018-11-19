@@ -24,14 +24,14 @@ Restaurant::Restaurant(const std::string &configFilePath):
         bool first = false;
         int idDish=0;
         DishType dishType;
-        int tablesNum;
+        //int tablesNum;
         while(getline(file,line)) {
             if (isdigit(line[0]) || isalpha(line[0]))    //if number or letter
             {
                 if (isdigit(line[0])) {
                     if (!first) {
                         first = true;
-                        tablesNum = stoi(line);
+                        //tablesNum = stoi(line);
                     }
                     else {
                         string token;
