@@ -24,7 +24,7 @@ Restaurant::Restaurant(const std::string &configFilePath):
         bool first = false;
         int idDish=0;
         DishType dishType;
-        //int tablesNum;
+        //ssint tablesNum;
         while(getline(file,line)) {
             if (isdigit(line[0]) || isalpha(line[0]))    //if number or letter
             {
@@ -59,9 +59,9 @@ Restaurant::Restaurant(const std::string &configFilePath):
 
                     if (dishstr=="VEG")
                         dishType = VEG;
-                    if (dishstr=="SPC")
+                    else if (dishstr=="SPC")
                         dishType = SPC;
-                    if (dishstr=="BVG")
+                    else if (dishstr=="BVG")
                         dishType = BVG;
                     else
                         dishType = ALC;
@@ -175,8 +175,9 @@ void Restaurant::start() {
     int customer_index=0;
     bool finito=false;
     string line;
-    while(!finito && getline(cin,line)) {
+    while(!finito) {
         int i=0;
+        getline(cin,line);
         while (line[i] != ' ')
             i++;
         string action = line.substr(0, i);                  //string of action
@@ -188,7 +189,7 @@ void Restaurant::start() {
             int j=i+1;
             while (line[j] != ' ')
                 j++;
-            string table_id = line.substr(i+1, j);
+            string table_id = line.substr(i+1, j-(i+1));
 
             j++;
             i=j;
@@ -197,18 +198,21 @@ void Restaurant::start() {
             {
                 while(line[j] != ',')
                     j++;
-                string customer_name = line.substr(i, j);
+                string customer_name = line.substr(i, j-i);
                 if(line[j+1] == 's' || line[j+1] == 'S')
                     customers_input.push_back(new SpicyCustomer(customer_name, customer_index));
-                if(line[j+1] == 'v' || line[j+1] == 'V')
+                else if(line[j+1] == 'v' || line[j+1] == 'V')
                     customers_input.push_back(new VegetarianCustomer(customer_name, customer_index));
-                if(line[j+1] == 'c' || line[j+1] == 'C')
+                else if(line[j+1] == 'c' || line[j+1] == 'C')
                     customers_input.push_back(new CheapCustomer(customer_name, customer_index));
                 else
                     customers_input.push_back(new AlchoholicCustomer(customer_name, customer_index));
                 j=j+5;
                 i=j;
+                customer_index++;
             }
+
+
             OpenTable* action1= new OpenTable(stoi(table_id), customers_input);
             action1->act(*this);
             actionsLog.push_back(action1);
@@ -220,7 +224,7 @@ void Restaurant::start() {
             int j=i+1;
             while (j<(int)line.size())
                 j++;
-            string table_id = line.substr(i+1, j);
+            string table_id = line.substr(i+1, j-(i+1));
 
             Order* action1= new Order(stoi(table_id));
             action1->act(*this);
@@ -232,13 +236,13 @@ void Restaurant::start() {
             i=j;
             while (line[j] != ' ')
                 j++;
-            string srctable = line.substr(i, j);
+            string srctable = line.substr(i, j-i);
             j=j+1;
             i=j;
             while (line[j] != ' ')
                 j++;
-            string destable = line.substr(i, j);
-            string idcustomer = line.substr(j+1, (int)line.size());
+            string destable = line.substr(i, j-i);
+            string idcustomer = line.substr(j+1, (int)line.size()-(j+1));
 
             MoveCustomer* action1= new MoveCustomer(stoi(srctable),stoi(destable),stoi(idcustomer));
             action1->act(*this);
@@ -249,7 +253,7 @@ void Restaurant::start() {
             int j=i+1;
             while (j<(int)line.size())
                 j++;
-            string table_id = line.substr(i+1, j);
+            string table_id = line.substr(i+1, j-(i+1));
 
             Close* action1= new Close(stoi(table_id));
             action1->act(*this);
@@ -275,7 +279,7 @@ void Restaurant::start() {
             int j=i+1;
             while (j<(int)line.size())
                 j++;
-            string table_id = line.substr(i+1, j);
+            string table_id = line.substr(i+1, j-(i+1));
 
             PrintTableStatus* action1= new PrintTableStatus(stoi(table_id));
             action1->act(*this);

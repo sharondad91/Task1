@@ -2,6 +2,7 @@
 #define TABLE_H_
 
 #include <vector>
+#include <iostream>
 #include "Customer.h"
 #include "Dish.h"
 

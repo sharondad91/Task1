@@ -185,8 +185,10 @@ std::vector<int> vegOrder(const std::vector<Dish> &menu) {
     int vegDish = 0;
     std::vector<int> ret;
     while (i <(int) menu.size()) {
-        if (menu[i].getType() == VEG)
+        if (menu[i].getType() == VEG) {
             vegDish = i;
+            i = (int)menu.size();
+        }
         i++;
     }
     if (menu[vegDish].getType() == VEG)

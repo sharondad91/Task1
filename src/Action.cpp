@@ -31,15 +31,15 @@ using namespace std;
     {}
 
     void OpenTable::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()<=tableId)||!(restaurant.getTable(tableId)->isOpen())) {
+        if((restaurant.getNumOfTables()<=tableId)||(restaurant.getTable(tableId)->isOpen())) {
             std::string str = "Table does not exist or is already open";
             error(str);
         }
         else{
-            restaurant.getTable(tableId)->openTable();                              //.............?
+            restaurant.getTable(tableId)->openTable();
             int i=0;
             while (i < (int)customers.size()) {
-                restaurant.getTable(tableId)->addCustomer(customers[i]);
+                restaurant.getTable(tableId)->addCustomer(customers[i]->clone());
                 i++;
             }
             restaurant.getTable(tableId)->openTable();
@@ -53,11 +53,13 @@ using namespace std;
         {
             str+=customers[i]->getName()+","+customers[i]->toString()+" ";
         }
-        switch(getStatus()) {
-            case COMPLETED: str+="Completed";
-            case ERROR: str+="Error: "+getErrorMsg();
-            case PENDING: str+="Pending";
-        }
+        if(getStatus()==COMPLETED)
+            str+="Completed";
+        else if(getStatus()==ERROR)
+            str+="Error: "+getErrorMsg();
+        else if(getStatus()==PENDING)
+            str+="Pending";
+
         return str;
 
     }
@@ -76,14 +78,14 @@ using namespace std;
             restaurant.getTable(tableId)->order(restaurant.getMenu());
 
             vector<OrderPair>& orders= restaurant.getTable(tableId)->getOrders();
-            int i=0;
-            while(i<(int)orders.size())
-            {
-                int customer_id= orders[i].first;
-                string customer_name= restaurant.getTable(tableId)->getCustomer(customer_id)->getName();
-                cout<<customer_name<<" ordered "<<orders[i].second.getName()<<endl;
-                i++;
-            }
+//            int i=0;
+//            while(i<(int)orders.size())
+//            {
+//                int customer_id= orders[i].first;
+//                string customer_name= restaurant.getTable(tableId)->getCustomer(customer_id)->getName();
+//                cout<<customer_name<<" ordered "<<orders[i].second.getName()<<endl;
+//                i++;
+//            }
 
             complete();
         }
@@ -92,11 +94,13 @@ using namespace std;
     std::string Order::toString() const{
         std::string str="order "+to_string(tableId)+" ";
 
-    switch(getStatus()) {
-            case COMPLETED: str+="Completed";
-            case ERROR: str+="Error: "+getErrorMsg();
-            case PENDING: str+="Pending";
-        }
+        if(getStatus()==COMPLETED)
+            str+="Completed";
+        else if(getStatus()==ERROR)
+            str+="Error: "+getErrorMsg();
+        else if(getStatus()==PENDING)
+            str+="Pending";
+
         return str;
 
     }
@@ -142,11 +146,13 @@ using namespace std;
     std::string MoveCustomer::toString() const{
         std::string str="move "+to_string(srcTable)+" "+to_string(dstTable)+" "+to_string(id)+" ";
 
-        switch(getStatus()) {
-            case COMPLETED: str+="Completed";
-            case ERROR: str+="Error: "+getErrorMsg();
-            case PENDING: str+="Pending";
-        }
+        if(getStatus()==COMPLETED)
+            str+="Completed";
+        else if(getStatus()==ERROR)
+            str+="Error: "+getErrorMsg();
+        else if(getStatus()==PENDING)
+            str+="Pending";
+
         return str;
     }
 
@@ -157,7 +163,7 @@ using namespace std;
     {}
 
     void Close::act(Restaurant &restaurant){
-        if((restaurant.getNumOfTables()<=tableId) || (restaurant.getTable(tableId)->isOpen()) ) {
+        if((restaurant.getNumOfTables()<=tableId) || !(restaurant.getTable(tableId)->isOpen()) ) {
             std::string str = "Table does not exist or is not open";
             error(str);
         }
@@ -172,11 +178,13 @@ using namespace std;
     std::string Close::toString() const{
         std::string str="close "+to_string(tableId)+" ";
 
-        switch(getStatus()) {
-            case COMPLETED: str+="Completed";
-            case ERROR: str+="Error: "+getErrorMsg();
-            case PENDING: str+="Pending";
-        }
+        if(getStatus()==COMPLETED)
+            str+="Completed";
+        else if(getStatus()==ERROR)
+            str+="Error: "+getErrorMsg();
+        else if(getStatus()==PENDING)
+            str+="Pending";
+
         return str;
     }
 
@@ -191,8 +199,10 @@ using namespace std;
         {
             if(restaurant.getTable(i)->isOpen())
             {
-                Close(i).act(restaurant);
+                Close* action1= new Close(i);
+                action1->act(restaurant);
             }
+            i++;
         }
         complete();
     }
@@ -238,7 +248,7 @@ using namespace std;
             cout<<"Customers:"<<endl;
             for(int i=0;i<(int)restaurant.getTable(tableId)->getCustomers().size();i++)
             {
-                cout<<restaurant.getTable(tableId)->getCustomer(i)->getId()<<" "<<restaurant.getTable(tableId)->getCustomer(i)->getName()<<endl;
+                cout<<restaurant.getTable(tableId)->getCustomers()[i]->getId()<<" "<<restaurant.getTable(tableId)->getCustomers()[i]->getName()<<endl;
             }
             cout<<"Orders:"<<endl;
             for(int i=0;i<(int)restaurant.getTable(tableId)->getOrders().size();i++)
@@ -306,11 +316,13 @@ using namespace std;
     }
     std::string RestoreResturant::toString() const{
         std::string str="restore ";
-        switch(getStatus()) {
-            case COMPLETED: str+="Completed";
-            case ERROR: str+="Error: "+getErrorMsg();
-            case PENDING: str+="Pending";
-        }
+        if(getStatus()==COMPLETED)
+            str+="Completed";
+        else if(getStatus()==ERROR)
+            str+="Error: "+getErrorMsg();
+        else if(getStatus()==PENDING)
+            str+="Pending";
+
         return str;
     }
 

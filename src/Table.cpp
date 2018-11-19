@@ -96,7 +96,15 @@ void Table::addCustomer(Customer* customer){
 }
 
 void Table::removeCustomer(int id){
+    int index=0;
+    for(int i=0;i<(int)customersList.size();i++)
+    {
+        if(customersList[i]->getId()==id)
+            index=i;
+    }
     delete getCustomer(id);
+    customersList.erase(customersList.begin()+index);
+
 }
 
 void Table::moveOrders(Table* srcTable, int customerId){
@@ -148,6 +156,8 @@ void Table::order(const std::vector<Dish> &menu){
                 //OrderPair* tmpOrder= new OrderPair(customersList[i]->getId(),dish2);
                 OrderPair tmpOrder= OrderPair(customersList[i]->getId(),dish2);
                 orderList.push_back(tmpOrder);
+
+                cout<<getCustomer(tmpOrder.first)->getName()<<" ordered "<<tmpOrder.second.getName()<<endl;
             }
         }
 
