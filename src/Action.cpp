@@ -48,17 +48,17 @@ using namespace std;
     }
 
     std::string OpenTable::toString() const{
-        cout<<"open "<<tableId<<" ";
+        std::string str="open "+to_string(tableId)+" ";
         for (int i=0;i<(int)customers.size();i++)
         {
-            cout<<customers[i]->getName()<<","<<customers[i]->toString()<<" ";
+            str+=customers[i]->getName()+","+customers[i]->toString()+" ";
         }
         switch(getStatus()) {
-            case COMPLETED: cout << "Completed"<<endl;
-                break;
-            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
-                break;
+            case COMPLETED: str+="Completed";
+            case ERROR: str+="Error: "+getErrorMsg();
+            case PENDING: str+="Pending";
         }
+        return str;
 
     }
 
@@ -90,14 +90,15 @@ using namespace std;
     }
 
     std::string Order::toString() const{
-        cout<<"order "<<tableId<<" ";
+        std::string str="order "+to_string(tableId)+" ";
 
-        switch(getStatus()) {
-            case COMPLETED: cout << "Completed"<<endl;
-                break;
-            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
-                break;
+    switch(getStatus()) {
+            case COMPLETED: str+="Completed";
+            case ERROR: str+="Error: "+getErrorMsg();
+            case PENDING: str+="Pending";
         }
+        return str;
+
     }
 
 
@@ -139,13 +140,14 @@ using namespace std;
     }
 
     std::string MoveCustomer::toString() const{
-        cout<<"move "<<srcTable<<" "<<dstTable<<" "<<id<<" ";
+        std::string str="move "+to_string(srcTable)+" "+to_string(dstTable)+" "+to_string(id)+" ";
+
         switch(getStatus()) {
-            case COMPLETED: cout << "Completed"<<endl;
-                break;
-            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
-                break;
+            case COMPLETED: str+="Completed";
+            case ERROR: str+="Error: "+getErrorMsg();
+            case PENDING: str+="Pending";
         }
+        return str;
     }
 
 
@@ -168,19 +170,19 @@ using namespace std;
     }
 
     std::string Close::toString() const{
-        cout<<"close "<<tableId<<" ";
+        std::string str="close "+to_string(tableId)+" ";
 
         switch(getStatus()) {
-            case COMPLETED: cout << "Completed"<<endl;
-                break;
-            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
-                break;
+            case COMPLETED: str+="Completed";
+            case ERROR: str+="Error: "+getErrorMsg();
+            case PENDING: str+="Pending";
         }
+        return str;
     }
 
 
     CloseAll::CloseAll():
-
+        BaseAction()
     {}
 
     void CloseAll::act(Restaurant &restaurant){
@@ -189,14 +191,15 @@ using namespace std;
         {
             if(restaurant.getTable(i)->isOpen() == true)
             {
-                Close(i).act(restaurant);                       //....?
+                Close(i).act(restaurant);
             }
-            //............close restaurant and exit
         }
         complete();
     }
 
-    std::string CloseAll::toString() const;
+    std::string CloseAll::toString() const{
+        return "";
+    }
 
 
     PrintMenu::PrintMenu():
@@ -215,7 +218,7 @@ using namespace std;
     }
 
     std::string PrintMenu::toString() const{
-        cout<<"menu Completed"<<endl;
+        return "menu Completed";
     }
 
 
@@ -230,8 +233,7 @@ using namespace std;
         }
         else                                                //opened table
         {
-            std::vector<OrderPair>& orders= restaurant.getTable(tableId)->getOrders();
-                //print status, customers, orders
+            //std::vector<OrderPair>& orders= restaurant.getTable(tableId)->getOrders();
             cout<<"Table "<<tableId<<" status: open"<<endl;
             cout<<"Customers:"<<endl;
             for(int i=0;i<(int)restaurant.getTable(tableId)->getCustomers().size();i++)
@@ -250,8 +252,7 @@ using namespace std;
     }
 
     std::string PrintTableStatus::toString() const{
-        cout<<"status "<<tableId<<" Completed"<<endl;
-
+        return "status "+to_string(tableId)+" Completed";
     }
 
 
@@ -262,12 +263,12 @@ using namespace std;
     void PrintActionsLog::act(Restaurant &restaurant){
         for(int i=0;i<(int)restaurant.getActionsLog().size();i++)
         {
-            (restaurant.getActionsLog())[i]->toString();
+            cout<<(restaurant.getActionsLog())[i]->toString()<<endl;
         }
         complete();
     }
     std::string PrintActionsLog::toString() const{
-        cout<<"log Completed"<<endl;
+        return "log Completed";
     }
 
 
@@ -283,7 +284,7 @@ using namespace std;
     }
     std::string BackupRestaurant::toString() const{
 
-        cout<<"backup Completed"<<endl;
+        return "backup Completed";
     }
 
 
@@ -304,13 +305,13 @@ using namespace std;
         }
     }
     std::string RestoreResturant::toString() const{
-        cout<<"restore ";
+        std::string str="restore ";
         switch(getStatus()) {
-            case COMPLETED: cout << "Completed"<<endl;
-                break;
-            case ERROR: cout << "Error: "<<getErrorMsg()<<endl;
-                break;
+            case COMPLETED: str+="Completed";
+            case ERROR: str+="Error: "+getErrorMsg();
+            case PENDING: str+="Pending";
         }
+        return str;
     }
 
 
