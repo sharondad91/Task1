@@ -371,7 +371,6 @@ BaseAction* RestoreResturant::clone(){
     {}
 
     void RestoreResturant::act(Restaurant &restaurant){
-            // = constructor
         if(backup== nullptr)
         {
             std::string str = "No backup available";

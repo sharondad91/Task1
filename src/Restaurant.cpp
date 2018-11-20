@@ -131,6 +131,8 @@ Restaurant& Restaurant::operator=(const Restaurant& otherRest) {    //copy=
     }
     for(int i=0;i<(int)otherRest.actionsLog.size();i++)
     {
+        if(actionsLog[i]!= nullptr)
+            delete actionsLog[i];
         actionsLog.push_back(otherRest.actionsLog[i]->clone());
     }
     return *this;
