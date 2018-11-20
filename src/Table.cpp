@@ -2,7 +2,7 @@
 // Created by sharon on 11/12/18.
 //
 
-#include "Table.h"
+#include "../include/Table.h"
 using namespace std;
 
 Table::Table():

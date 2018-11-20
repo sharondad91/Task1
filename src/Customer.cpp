@@ -2,7 +2,7 @@
 // Created by inbarb123 on 11/13/18.
 //
 
-#include "Customer.h"
+#include "../include/Customer.h"
 
 
 Customer::Customer() :

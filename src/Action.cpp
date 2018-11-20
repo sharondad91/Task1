@@ -2,9 +2,9 @@
 // Created by inbarb123 on 11/15/18.
 //
 
-#include "Action.h"
-#include "Table.h"
-#include "Restaurant.h"
+#include "../include/Action.h"
+#include "../include/Table.h"
+#include "../include/Restaurant.h"
 extern Restaurant* backup;
 using namespace std;
 
