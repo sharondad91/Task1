@@ -35,7 +35,7 @@ public:
 
 //    VegetarianCustomer(const VegetarianCustomer& otherCustomer);  //copy constructor
 //    VegetarianCustomer(VegetarianCustomer&& otherCustomer); //move constructor
-    virtual ~VegetarianCustomer();  //destructor
+	~VegetarianCustomer();  //destructor
 
 private:
 
@@ -52,7 +52,7 @@ public:
 
 //    CheapCustomer(const CheapCustomer& otherCustomer);  //copy constructor
 //    CheapCustomer(CheapCustomer&& otherCustomer); //move constructor
-    virtual ~CheapCustomer();  //destructor
+	~CheapCustomer();  //destructor
 
 private:
 	bool first;
@@ -69,7 +69,7 @@ public:
 
 //    SpicyCustomer(const SpicyCustomer& otherCustomer);  //copy constructor
 //    SpicyCustomer(SpicyCustomer&& otherCustomer); //move constructor
-    virtual ~SpicyCustomer();  //destructor
+	~SpicyCustomer();  //destructor
 
 private:
 	bool first;
@@ -86,7 +86,7 @@ public:
 
 //    AlchoholicCustomer(const AlchoholicCustomer& otherCustomer);  //copy constructor
 //    AlchoholicCustomer(AlchoholicCustomer&& otherCustomer); //move constructor
-	virtual ~AlchoholicCustomer();  //destructor
+	~AlchoholicCustomer();  //destructor
 
 private:
 	int lastID;
