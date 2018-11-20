@@ -292,23 +292,22 @@ void Restaurant::start() {
         }
         if(action=="log")
         {
-
             PrintActionsLog* action1= new PrintActionsLog();
             action1->act(*this);
             actionsLog.push_back(action1);
-
-
-
         }
         if(action=="backup")
         {
-
+            BackupRestaurant* action1= new BackupRestaurant();
+            action1->act(*this);
+            actionsLog.push_back(action1);
         }
         if(action=="restore")
         {
-
+            RestoreResturant* action1= new RestoreResturant();
+            action1->act(*this);
+            actionsLog.push_back(action1);
         }
-        //BaseAction* action= new BaseAction();
 
     }
 }

@@ -76,6 +76,8 @@ BaseAction* OpenTable::clone(){
         return str;
 
     }
+Order::~Order(){
+    }
 
     BaseAction* Order::clone(){
         return new Order(*this);
@@ -120,6 +122,9 @@ BaseAction* OpenTable::clone(){
         return str;
 
     }
+
+MoveCustomer::~MoveCustomer(){
+}
 
     BaseAction* MoveCustomer::clone(){
         return new MoveCustomer(*this);
@@ -175,6 +180,8 @@ BaseAction* OpenTable::clone(){
         return str;
     }
 
+Close::~Close(){
+}
 
 BaseAction* Close::clone(){
     return new Close(*this);
@@ -210,6 +217,9 @@ BaseAction* Close::clone(){
         return str;
     }
 
+CloseAll::~CloseAll(){
+}
+
 BaseAction* CloseAll::clone(){
     return new CloseAll(*this);
 }
@@ -236,6 +246,9 @@ BaseAction* CloseAll::clone(){
         return "";
     }
 
+PrintMenu::~PrintMenu(){
+}
+
 BaseAction* PrintMenu::clone(){
     return new PrintMenu(*this);
 }
@@ -258,6 +271,9 @@ BaseAction* PrintMenu::clone(){
     std::string PrintMenu::toString() const{
         return "menu Completed";
     }
+
+PrintTableStatus::~PrintTableStatus(){
+}
 
 BaseAction* PrintTableStatus::clone(){
     return new PrintTableStatus(*this);
@@ -296,6 +312,9 @@ BaseAction* PrintTableStatus::clone(){
         return "status "+to_string(tableId)+" Completed";
     }
 
+PrintActionsLog::~PrintActionsLog(){
+}
+
 BaseAction* PrintActionsLog::clone(){
     return new PrintActionsLog(*this);
 }
@@ -315,6 +334,9 @@ BaseAction* PrintActionsLog::clone(){
         return "log Completed";
     }
 
+BackupRestaurant::~BackupRestaurant(){
+}
+
 BaseAction* BackupRestaurant::clone(){
     return new BackupRestaurant(*this);
 }
@@ -333,6 +355,9 @@ BaseAction* BackupRestaurant::clone(){
 
         return "backup Completed";
     }
+
+RestoreResturant::~RestoreResturant(){
+}
 
 BaseAction* RestoreResturant::clone(){
     return new RestoreResturant(*this);

@@ -20,6 +20,7 @@ public:
     virtual void act(Restaurant& restaurant)=0;
     virtual std::string toString() const=0;
     virtual BaseAction* clone() =0;
+    virtual ~BaseAction()=0;
 protected:
     void complete();
     void error(std::string errorMsg);
@@ -49,6 +50,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~Order();
 private:
     const int tableId;
 };
@@ -60,6 +62,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~MoveCustomer();
 private:
     const int srcTable;
     const int dstTable;
@@ -73,6 +76,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~Close();
 private:
     const int tableId;
 };
@@ -84,6 +88,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~CloseAll();
 private:
 };
 
@@ -94,6 +99,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~PrintMenu();
 private:
 };
 
@@ -104,6 +110,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~PrintTableStatus();
 private:
     const int tableId;
 };
@@ -115,6 +122,8 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~PrintActionsLog();
+
 private:
 };
 
@@ -125,6 +134,8 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~BackupRestaurant();
+
 private:
 };
 
@@ -135,6 +146,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
+    virtual ~RestoreResturant();
 
 };
 
