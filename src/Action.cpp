@@ -39,7 +39,16 @@ OpenTable::~OpenTable() {  //destructor
 }
 
 BaseAction* OpenTable::clone(){
-    return new OpenTable(*this);
+        std::vector<Customer*> otherCustomers;
+    for (int i = 0; i<(int)this->customers.size();i++)
+        otherCustomers.push_back(customers[i]->clone());
+    OpenTable* ba= new OpenTable(tableId,otherCustomers);
+    if(this->getStatus()==COMPLETED)
+        ba->complete();
+    else if(this->getStatus()==ERROR)
+        ba->error(this->getErrorMsg());
+    return ba;
+
     }
 
     OpenTable::OpenTable(int id, std::vector<Customer *> &customersList):
@@ -383,7 +392,7 @@ BaseAction* RestoreResturant::clone(){
             cout << "Error: "<<str << endl;
         }
         else{
-            restaurant=(*backup);
+            restaurant=*backup;
             complete();
         }
     }
