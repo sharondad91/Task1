@@ -25,6 +25,9 @@ using namespace std;
         return errorMsg;
 }
 
+BaseAction::~BaseAction(){  //destructor
+}
+
 OpenTable::~OpenTable() {  //destructor
     for (int i = 0; i < (int)customers.size(); i++) {
         if(customers[i]!= nullptr)
