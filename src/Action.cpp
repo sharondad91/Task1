@@ -239,6 +239,7 @@ BaseAction* CloseAll::clone(){
             {
                 Close* action1= new Close(i);
                 action1->act(restaurant);
+                delete action1;
             }
             i++;
         }

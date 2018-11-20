@@ -5,6 +5,8 @@
 #include "Restaurant.h"
 #include <fstream>
 using namespace std;
+extern Restaurant* backup;
+
 
 Restaurant::Restaurant():
     open (false),tables (),menu (),actionsLog ()
@@ -165,9 +167,14 @@ Restaurant::~Restaurant(){  //destructor
             delete tables[i];
             tables[i] = nullptr;
         }
+    }
+    for(int i=0;i<(int)actionsLog.size();i++)
+    {
         if(actionsLog[i]!= nullptr){
             delete actionsLog[i];
             actionsLog[i] = nullptr;
+            // actionsLog.erase(actionsLog.begin()+i);
+
         }
     }
 }
@@ -273,6 +280,21 @@ void Restaurant::start() {
             action1->act(*this);
             actionsLog.push_back(action1);
             finito = true;
+
+//            for(int i=0;i<(int)tables.size();i++)
+//            {
+//                if(tables[i]!= nullptr) {
+//                    delete tables[i];
+//                    tables[i] = nullptr;
+//                    //customersList.erase(customersList.begin()+index);
+//                }
+//                if(actionsLog[i]!= nullptr){
+//                    delete actionsLog[i];
+//                    //actionsLog[i] = nullptr;
+//                    actionsLog.erase(actionsLog.begin()+i);
+//                }
+//            }
+
         }
         if (action=="menu")
         {
