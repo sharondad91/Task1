@@ -200,13 +200,12 @@ std::vector<int> vegOrder(const std::vector<Dish> &menu) {
     int bevExp = -1;
     bool found = false;
     while (i < (int)menu.size()) {
-        if (!(found)) {
-            if (menu[i].getType() == BVG) {
+            if (!found && menu[i].getType() == BVG) {
                 bevExp = i;
                 found = true;
-            } else if (menu[i].getType() == BVG && (menu[i].getPrice() > menu[bevExp].getPrice()))
+            }
+            else if (menu[i].getType() == BVG && (menu[i].getPrice() > menu[bevExp].getPrice()))
                 bevExp = i;
-        }
         i++;
     }
     if (bevExp != -1)
