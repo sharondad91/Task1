@@ -120,21 +120,25 @@ Restaurant& Restaurant::operator=(const Restaurant& otherRest) {    //copy=
     if(this==&otherRest)
         return *this;
     this->open=otherRest.open;
-
+//    int k = (int)tables.size();
+//    for(int i=0;i<(int)tables.size();i++){
+//        if(tables[i]!= nullptr)
+//            delete tables[i];
+//    }
     for(int i=0;i<(int)otherRest.tables.size();i++)
-    {
-        if(tables[i]!= nullptr)
-            delete tables[i];
-        tables.push_back(new Table(*otherRest.tables[i]));
-    }
+        tables[i]=otherRest.tables[i];
+
+
     for(int i=0;i<(int)otherRest.menu.size();i++)
     {
         menu.push_back(otherRest.menu[i]);
     }
-    for(int i=0;i<(int)otherRest.actionsLog.size();i++)
-    {
-        if(actionsLog[i]!= nullptr)
+    for(int i=0;i<(int)actionsLog.size();i++) {
+        if (actionsLog[i] != nullptr)
             delete actionsLog[i];
+    }
+    for(int i=0;i<(int)otherRest.actionsLog.size();i++)
+        {
         actionsLog.push_back(otherRest.actionsLog[i]->clone());
     }
     return *this;
