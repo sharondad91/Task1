@@ -50,7 +50,7 @@ BaseAction* OpenTable::clone(){
         if((restaurant.getNumOfTables()<=tableId)||(restaurant.getTable(tableId)->isOpen())) {
             std::string str = "Table does not exist or is already open";
             error(str);
-            cout << str << endl;
+            cout << "Error: "<<str << endl;
         }
         else{
             restaurant.getTable(tableId)->openTable();
@@ -95,6 +95,7 @@ Order::~Order(){
         if((restaurant.getNumOfTables()<=tableId)||!(restaurant.getTable(tableId)->isOpen())) {
             std::string str = "Table does not exist or is not open";
             error(str);
+            cout << "Error: "<<str << endl;
         }
         else {
             restaurant.getTable(tableId)->order(restaurant.getMenu());
@@ -166,6 +167,7 @@ MoveCustomer::~MoveCustomer(){
         else {
             std::string str = "Cannot move customer";
             error(str);
+            cout << "Error: "<<str << endl;
         }
 
 
@@ -199,6 +201,7 @@ BaseAction* Close::clone(){
         if((restaurant.getNumOfTables()<=tableId) || !(restaurant.getTable(tableId)->isOpen()) ) {
             std::string str = "Table does not exist or is not open";
             error(str);
+            cout << "Error: "<<str << endl;
         }
         else{
             int curr_bill= restaurant.getTable(tableId)->getBill();                     //use bill amount???
@@ -377,6 +380,7 @@ BaseAction* RestoreResturant::clone(){
         {
             std::string str = "No backup available";
             error(str);
+            cout << "Error: "<<str << endl;
         }
         else{
             restaurant=(*backup);

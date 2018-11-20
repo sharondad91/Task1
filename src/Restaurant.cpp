@@ -120,7 +120,6 @@ Restaurant& Restaurant::operator=(const Restaurant& otherRest) {    //copy=
     if(this==&otherRest)
         return *this;
     this->open=otherRest.open;
-//    int k = (int)tables.size();
     for(int i=0;i<(int)tables.size();i++){
         if(tables[i]!= nullptr) {
             delete tables[i];

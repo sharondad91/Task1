@@ -46,10 +46,15 @@ Table& Table::operator=(const Table& otherTable){    //copy=
 
     for(int i=0;i<(int)otherTable.customersList.size();i++)
     {
-        if(customersList[i]!= nullptr)
+        if(customersList[i]!= nullptr){
             delete customersList[i];
-        customersList.push_back(otherTable.customersList[i]->clone());
+            customersList[i]= nullptr;
+        }
+        customersList.clear();
     }
+    for(int i=0;i<(int)otherTable.customersList.size();i++)
+        customersList.push_back(otherTable.customersList[i]->clone());
+
     for(int i=0;i<(int)otherTable.orderList.size();i++)
     {
         orderList.push_back(otherTable.orderList[i]);
