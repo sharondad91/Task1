@@ -50,6 +50,7 @@ BaseAction* OpenTable::clone(){
         if((restaurant.getNumOfTables()<=tableId)||(restaurant.getTable(tableId)->isOpen())) {
             std::string str = "Table does not exist or is already open";
             error(str);
+            cout << str << endl;
         }
         else{
             restaurant.getTable(tableId)->openTable();
@@ -378,7 +379,7 @@ BaseAction* RestoreResturant::clone(){
             error(str);
         }
         else{
-            restaurant=*backup;
+            restaurant=(*backup);
             complete();
         }
     }
