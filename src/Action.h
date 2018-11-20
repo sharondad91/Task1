@@ -37,7 +37,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~OpenTable();
+    ~OpenTable();
 private:
 	const int tableId;
 	std::vector<Customer *> customers;
@@ -50,7 +50,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~Order();
+    ~Order();
 private:
     const int tableId;
 };
@@ -62,7 +62,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~MoveCustomer();
+    ~MoveCustomer();
 private:
     const int srcTable;
     const int dstTable;
@@ -76,7 +76,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~Close();
+    ~Close();
 private:
     const int tableId;
 };
@@ -88,7 +88,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~CloseAll();
+    ~CloseAll();
 private:
 };
 
@@ -99,7 +99,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~PrintMenu();
+    ~PrintMenu();
 private:
 };
 
@@ -110,7 +110,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~PrintTableStatus();
+    ~PrintTableStatus();
 private:
     const int tableId;
 };
@@ -122,7 +122,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~PrintActionsLog();
+    ~PrintActionsLog();
 
 private:
 };
@@ -134,7 +134,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~BackupRestaurant();
+    ~BackupRestaurant();
 
 private:
 };
@@ -146,7 +146,7 @@ public:
     void act(Restaurant &restaurant);
     std::string toString() const;
     BaseAction* clone();
-    virtual ~RestoreResturant();
+    ~RestoreResturant();
 
 };
 
