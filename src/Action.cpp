@@ -25,6 +25,19 @@ using namespace std;
         return errorMsg;
 }
 
+OpenTable::~OpenTable() {  //destructor
+    for (int i = 0; i < (int)customers.size(); i++) {
+        if(customers[i]!= nullptr)
+        {
+            delete customers[i];
+            customers[i]= nullptr;
+        }
+    }
+}
+
+BaseAction* OpenTable::clone(){
+    return new OpenTable(*this);
+    }
 
     OpenTable::OpenTable(int id, std::vector<Customer *> &customersList):
     BaseAction(), tableId(id), customers(customersList)
@@ -64,6 +77,9 @@ using namespace std;
 
     }
 
+    BaseAction* Order::clone(){
+        return new Order(*this);
+    }
 
     Order::Order(int id):
         BaseAction(), tableId(id)
@@ -77,7 +93,7 @@ using namespace std;
         else {
             restaurant.getTable(tableId)->order(restaurant.getMenu());
 
-            vector<OrderPair>& orders= restaurant.getTable(tableId)->getOrders();
+//            vector<OrderPair>& orders= restaurant.getTable(tableId)->getOrders();
 //            int i=0;
 //            while(i<(int)orders.size())
 //            {
@@ -105,6 +121,9 @@ using namespace std;
 
     }
 
+    BaseAction* MoveCustomer::clone(){
+        return new MoveCustomer(*this);
+    }
 
     MoveCustomer::MoveCustomer(int src, int dst, int customerId):
         BaseAction(), srcTable(src), dstTable(dst), id(customerId)
@@ -157,6 +176,9 @@ using namespace std;
     }
 
 
+BaseAction* Close::clone(){
+    return new Close(*this);
+}
 
     Close::Close(int id):
         BaseAction(), tableId(id)
@@ -188,6 +210,9 @@ using namespace std;
         return str;
     }
 
+BaseAction* CloseAll::clone(){
+    return new CloseAll(*this);
+}
 
     CloseAll::CloseAll():
         BaseAction()
@@ -211,6 +236,9 @@ using namespace std;
         return "";
     }
 
+BaseAction* PrintMenu::clone(){
+    return new PrintMenu(*this);
+}
 
     PrintMenu::PrintMenu():
         BaseAction()
@@ -231,6 +259,9 @@ using namespace std;
         return "menu Completed";
     }
 
+BaseAction* PrintTableStatus::clone(){
+    return new PrintTableStatus(*this);
+}
 
     PrintTableStatus::PrintTableStatus(int id):
         BaseAction(), tableId(id)
@@ -265,6 +296,9 @@ using namespace std;
         return "status "+to_string(tableId)+" Completed";
     }
 
+BaseAction* PrintActionsLog::clone(){
+    return new PrintActionsLog(*this);
+}
 
     PrintActionsLog::PrintActionsLog():
         BaseAction()
@@ -281,6 +315,9 @@ using namespace std;
         return "log Completed";
     }
 
+BaseAction* BackupRestaurant::clone(){
+    return new BackupRestaurant(*this);
+}
 
     BackupRestaurant::BackupRestaurant():
         BaseAction()
@@ -297,6 +334,9 @@ using namespace std;
         return "backup Completed";
     }
 
+BaseAction* RestoreResturant::clone(){
+    return new RestoreResturant(*this);
+}
 
     RestoreResturant::RestoreResturant():
         BaseAction()

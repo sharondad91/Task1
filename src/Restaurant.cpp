@@ -89,7 +89,7 @@ Restaurant::Restaurant(const Restaurant& otherRest):  //copy constructor
     }
     for(int i=0;i<(int)otherRest.actionsLog.size();i++)
     {
-        actionsLog.push_back(otherRest.actionsLog[i]);
+        actionsLog.push_back(otherRest.actionsLog[i]->clone());
     }
 }
 Restaurant::Restaurant(Restaurant&& otherRest): //move constructor
@@ -108,6 +108,7 @@ Restaurant::Restaurant(Restaurant&& otherRest): //move constructor
     for(int i=0;i<(int)otherRest.actionsLog.size();i++)
     {
         actionsLog.push_back(otherRest.actionsLog[i]);
+        delete otherRest.actionsLog[i];
         otherRest.actionsLog[i]= nullptr;
     }
 }
@@ -130,7 +131,7 @@ Restaurant& Restaurant::operator=(const Restaurant& otherRest) {    //copy=
     }
     for(int i=0;i<(int)otherRest.actionsLog.size();i++)
     {
-        actionsLog.push_back(otherRest.actionsLog[i]);
+        actionsLog.push_back(otherRest.actionsLog[i]->clone());
     }
     return *this;
 }
@@ -161,6 +162,10 @@ Restaurant::~Restaurant(){  //destructor
         if(tables[i]!= nullptr) {
             delete tables[i];
             tables[i] = nullptr;
+        }
+        if(actionsLog[i]!= nullptr){
+            delete actionsLog[i];
+            actionsLog[i] = nullptr;
         }
     }
 }
